@@ -9,10 +9,38 @@ from tkinter import *
 from tkinter import messagebox
 
 
+#--------------------Funcion de Jugar esto engomera toda la interfaz de jugar--------------------
+def jugarMenu():
 
 
 
+	#----------Grid de ayuda para colocar la interfaz---------
+	"""
+	Este grid al cambiarse el color de White a otro que se note, se mostrara una cuadricula que es 
+	la que se va a utilizar dentro del programa para ayudar a colocar todo de manera ordenada.
+	Entradas: El root donde se dibuja la cuadricula
+	Salidas: La cuadricula dibujada
+	Restricciones: No tiene
+	"""
+	n=30
+	for k in range(0, n):
+		frameAyuda = Frame(root, width=1, height=650, bg= "Blue")
+		frameAyuda.grid(row= 0, column=k, rowspan=n, sticky= "NW")
+		frameAyuda = Frame(root, width=650, height=1, bg= "Blue")
+		frameAyuda.grid(row= k, column=0, columnspan=n, sticky= "NW")
 
+	frameSudoku=Frame(root, bg="Grey").grid(row=1, column=1, rowspan=18, columnspan=18, sticky="NSEW")
+	botonIniciar=Button(root, bg="#cc8e35", text="Iniciar\nJuego", font="Arial, 12").grid(row=20, column=1, rowspan=2, columnspan=4, sticky="NSEW")
+	botonBorrarJugada=Button(root, bg="#ffda79", text="Borrar\nJugada", font="Arial, 12").grid(row=20, column=7, rowspan=2, columnspan=4, sticky="NSEW")
+	botonTerminar=Button(root, bg="#ccae62", text="Terminar\nJuego", font="Arial, 12").grid(row=20, column=13, rowspan=2, columnspan=4, sticky="NSEW")
+	botonBorrarJuego=Button(root, bg="#ffb142", text="Borrar\nJuego", font="Arial, 12").grid(row=20, column=19, rowspan=2, columnspan=4, sticky="NSEW")
+	botonTOP10=Button(root, bg="#cd6133", text="TOP 10", font="Arial, 12").grid(row=20, column=25, rowspan=2, columnspan=4, sticky="NSEW")
+	labelNombreJugador=Label(root, bg="#F8EFBA", text="Nombre del Jugador:", font="Arial, 12").grid(row=23, column=1, rowspan=2, columnspan=7, sticky="NSEW")
+	EntryNombreJugador=Entry(root, bg="White", font="Arial, 12")
+	EntryNombreJugador.grid(row=23, column=9, rowspan=2, columnspan=10, sticky="NSEW")
+	labelHoras=Label(root, bg="#808e9b", text="Horas", font="Arial, 11").grid(row=23, column=20, rowspan=2, columnspan=3, sticky="NSEW")
+	labelMinutos=Label(root, bg="#d2dae2", text="Minutos", font="Arial, 11").grid(row=23, column=23, rowspan=2, columnspan=3, sticky="NSEW")
+	labelSegundos=Label(root, bg="#808e9b", text="Segundos", font="Arial, 11").grid(row=23, column=26, rowspan=2, columnspan=3, sticky="NSEW")
 
 #--------------------Funciones del Menu desplegable (Basicas)--------------------
 #---Funcion de Ayuda---
@@ -63,8 +91,8 @@ Restricciones: No recibe
 root=Tk()
 root.title("SUDOKU")
 root.iconbitmap("icono_sudoku.ico")
-root.geometry("650x650")
-root.config(bg="white")
+root.geometry("650x670")
+root.config(bg="#F8EFBA")
 
 #----------Menu desplegable tipo IDLE---------
 """
@@ -78,7 +106,7 @@ vinetas= Menu()
 root.config(menu=vinetas)
 
 BarraJugar=Menu(vinetas, tearoff=False)
-vinetas.add_command(label="Jugar")
+vinetas.add_command(label="Jugar", command=jugarMenu)
 
 
 BarraConfigurar=Menu(vinetas, tearoff=False)
