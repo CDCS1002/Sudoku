@@ -1,1 +1,1 @@
-sudoku.py
+from tkinter import *
