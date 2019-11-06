@@ -7,11 +7,11 @@ Restricciones: Estan basados en la version python 3.7
 """
 from tkinter import *
 from tkinter import messagebox
+from PIL import ImageTk,Image
 
 
 #--------------------Funcion de Jugar esto engomera toda la interfaz de jugar--------------------
 def jugarMenu():
-
 
 
 	#----------Grid de ayuda para colocar la interfaz---------
@@ -29,18 +29,156 @@ def jugarMenu():
 		frameAyuda = Frame(root, width=650, height=1, bg= "Blue")
 		frameAyuda.grid(row= k, column=0, columnspan=n, sticky= "NW")
 
-	frameSudoku=Frame(root, bg="Grey").grid(row=1, column=1, rowspan=18, columnspan=18, sticky="NSEW")
-	botonIniciar=Button(root, bg="#cc8e35", text="Iniciar\nJuego", font="Arial, 12").grid(row=20, column=1, rowspan=2, columnspan=4, sticky="NSEW")
-	botonBorrarJugada=Button(root, bg="#ffda79", text="Borrar\nJugada", font="Arial, 12").grid(row=20, column=7, rowspan=2, columnspan=4, sticky="NSEW")
-	botonTerminar=Button(root, bg="#ccae62", text="Terminar\nJuego", font="Arial, 12").grid(row=20, column=13, rowspan=2, columnspan=4, sticky="NSEW")
-	botonBorrarJuego=Button(root, bg="#ffb142", text="Borrar\nJuego", font="Arial, 12").grid(row=20, column=19, rowspan=2, columnspan=4, sticky="NSEW")
-	botonTOP10=Button(root, bg="#cd6133", text="TOP 10", font="Arial, 12").grid(row=20, column=25, rowspan=2, columnspan=4, sticky="NSEW")
-	labelNombreJugador=Label(root, bg="#F8EFBA", text="Nombre del Jugador:", font="Arial, 12").grid(row=23, column=1, rowspan=2, columnspan=7, sticky="NSEW")
+
+
+	#----------Frame del area de Juego---------
+	"""
+	Este frame es el que va a contener el juego con la matriz de 9x9 creada con botones
+	Entradas: No recibe
+	Salidas: El frame con una cuadricula de 9x9
+	Restricciones: No tiene
+	"""
+	frameSudoku=Frame(root, bg="Grey")
+	frameSudoku.grid(row=1, column=1, rowspan=18, columnspan=18, sticky="NSEW")
+	nS=9
+	for kS in range(0, nS):
+		frameAyuda = Frame(frameSudoku, width=1, height=390, bg= "#9ACD32")
+		frameAyuda.grid(row= 0, column=kS, rowspan=nS, sticky= "NW")
+		frameAyuda = Frame(frameSudoku, width=390, height=1, bg= "#9ACD32")
+		frameAyuda.grid(row= kS, column=0, columnspan=nS, sticky= "NW")
+
+
+
+	#----------Boton y funcion de Iniciar Partida---------
+	"""
+	Entradas: No recibe
+	Salidas: Despliega el boton de iniciar dentro del root
+	Restricciones: No tiene
+	"""
+	def iniciar():
+		"""
+		Esta funcion sirve principalmente para empezar la partida, esto conlleva
+		iniciar el temporizador o el reloj depende de la configuracion que el usuario
+		haya escogido
+		Entradas: Recibe el evento del click del boton
+		Salidas: Empieza a correr el reloj y permite al jugador jugar
+		Restricciones: No tiene
+		"""
+		pass
+
+	botonIniciar=Button(root, bg="#008000", text="Iniciar\nJuego", font="Arial, 12", fg="White").grid(row=20, column=1, rowspan=2, columnspan=4, sticky="NSEW")
+	
+	#----------Boton y funcion de Borrar Jugada---------
+	"""
+	Entradas: No recibe
+	Salidas: Despliega el boton de borrar Jugada dentro del root
+	Restricciones: No tiene
+	"""
+	def borrarJugada():
+		"""
+		Esta funcion sirve para hacer un tipo de undo a la ultima jugada que se ha hecho,
+		de esta forma va a devolver a la anterior jugada
+		Entradas: Recibe el evento del click del boton
+		Salidas: Elimina la ultima jugada que se hizo
+		Restricciones: No tiene
+		"""
+		pass
+
+	botonBorrarJugada=Button(root, bg="#6B8E23", text="Borrar\nJugada", font="Arial, 12", fg="White").grid(row=20, column=7, rowspan=2, columnspan=4, sticky="NSEW")
+	
+	#----------Boton y funcion de Terminar---------
+	"""
+	Entradas: No recibe
+	Salidas: Despliega el boton de terminar dentro del root
+	Restricciones: No tiene
+	"""
+	def terminar():
+		"""
+		Esta funcion sirve para dar por finalizado el juego en el momento que el usuario lo desee,
+		se le va a preguntar 
+		Entradas: Recibe el evento del click del boton
+		Salidas: Empieza a correr el reloj y permite al jugador jugar
+		Restricciones: No tiene
+		"""
+		pass
+
+	botonTerminar=Button(root, bg="#008000", text="Terminar\nJuego", font="Arial, 12", fg="White").grid(row=20, column=13, rowspan=2, columnspan=4, sticky="NSEW")
+	
+	#----------Boton y funcion de Borrar Juego---------
+	"""
+	Entradas: No recibe
+	Salidas: Despliega el boton de borrar juego dentro del root
+	Restricciones: No tiene
+	"""
+	def borrarJuego():
+		pass
+
+	botonBorrarJuego=Button(root, bg="#6B8E23", text="Borrar\nJuego", font="Arial, 12", fg="White").grid(row=20, column=19, rowspan=2, columnspan=4, sticky="NSEW")
+	
+	#----------Boton y funcion de Top 10---------
+	"""
+	Entradas: No recibe
+	Salidas: Despliega el boton de top 10 dentro del root
+	Restricciones: No tiene
+	"""
+	def top10():
+		pass
+
+	botonTOP10=Button(root, bg="#008000", text="TOP 10", font="Arial, 12", fg="White").grid(row=20, column=25, rowspan=2, columnspan=4, sticky="NSEW")
+	
+	#----------Boton y funcion de Guardar---------
+	"""
+	Entradas: No recibe
+	Salidas: Despliega el boton de guardar dentro del root
+	Restricciones: No tiene
+	"""	
+	def guardar():
+		pass
+
+	botonGuardar=Button(root, bg="#6B8E23", text="Guardar\nJuego", font="Arial, 12", fg="White").grid(row=26, column=3, rowspan=2, columnspan=4, sticky="NSEW")
+	
+	#----------Boton y funcion de Cargar---------
+	"""
+	Entradas: No recibe
+	Salidas: Despliega el boton de cargar dentro del root
+	Restricciones: No tiene
+	"""
+	def cargar():
+		pass
+
+	botonCargar=Button(root, bg="#008000", text="Cargar\nJuego", font="Arial, 12", fg="White").grid(row=26, column=10, rowspan=2, columnspan=4, sticky="NSEW")
+	
+	#----------Despliegue del Nombre y Entry del jugador---------
+	"""
+	Entradas: No recibe
+	Salidas: Despliega el label y el entry de jugador dentro del root
+	Restricciones: No tiene
+	"""	
+	labelNombreJugador=Label(root, bg="#9ACD32", text="Nombre del Jugador:", font="Arial, 12", fg="White").grid(row=23, column=1, rowspan=2, columnspan=7, sticky="NSEW")
 	EntryNombreJugador=Entry(root, bg="White", font="Arial, 12")
 	EntryNombreJugador.grid(row=23, column=9, rowspan=2, columnspan=10, sticky="NSEW")
+	
+	#----------Boton y funciones de Timer y Reloj---------
+	"""
+	Entradas: No recibe
+	Salidas: Despliega el label que muestra el timer y el reloj dentro del root
+	Restricciones: No tiene
+	"""
+	def timer():
+		pass
+
+	def reloj():
+		pass
+
 	labelHoras=Label(root, bg="#808e9b", text="Horas", font="Arial, 11").grid(row=23, column=20, rowspan=2, columnspan=3, sticky="NSEW")
 	labelMinutos=Label(root, bg="#d2dae2", text="Minutos", font="Arial, 11").grid(row=23, column=23, rowspan=2, columnspan=3, sticky="NSEW")
 	labelSegundos=Label(root, bg="#808e9b", text="Segundos", font="Arial, 11").grid(row=23, column=26, rowspan=2, columnspan=3, sticky="NSEW")
+	time = Label(root, fg="Black", font=("","12"))
+	time.grid(row=25, column=20, rowspan=2, columnspan=9, sticky="NSEW")
+
+	LabelINDDificultad=Label(root, bg="#9ACD32", borderwidth=1, text="Dificultad:", font="Arial, 12", fg="White").grid(row=27, column=20, rowspan=2, columnspan=9, sticky="NSEW")
+
+
 
 #--------------------Funciones del Menu desplegable (Basicas)--------------------
 #---Funcion de Ayuda---
@@ -92,7 +230,7 @@ root=Tk()
 root.title("SUDOKU")
 root.iconbitmap("icono_sudoku.ico")
 root.geometry("650x670")
-root.config(bg="#F8EFBA")
+root.config(bg="#9ACD32")
 
 #----------Menu desplegable tipo IDLE---------
 """
