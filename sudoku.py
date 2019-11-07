@@ -47,6 +47,29 @@ def jugarMenu():
 		frameAyuda = Frame(frameSudoku, width=390, height=1, bg= "#9ACD32")
 		frameAyuda.grid(row= kS, column=0, columnspan=nS, sticky= "NW")
 
+	for i in range(0,9):
+		for k in range(0,9):e
+			BotonSudoku=Button(frameSudoku).grid(row=i, column=k, sticky="NSEW")
+
+
+
+	#--------------------Botones de Juego-----------------
+	"""
+	Estos son los botones que el jugador va a tener para poder jugar al sudoku,]
+	dependiendo del tipo de juego que el usuario seleccione, estos botones van a cambiar
+	Entradas: No recibe
+	Salidas: Los botones de juego
+	Restricciones: No tiene
+	"""
+	boton1=Button(root).grid(row=1, column=22, rowspan=2, columnspan=4, sticky="NSEW")
+	boton2=Button(root).grid(row=3, column=24, rowspan=2, columnspan=4, sticky="NSEW")
+	boton3=Button(root).grid(row=5, column=22, rowspan=2, columnspan=4, sticky="NSEW")
+	boton4=Button(root).grid(row=7, column=24, rowspan=2, columnspan=4, sticky="NSEW")
+	boton5=Button(root).grid(row=9, column=22, rowspan=2, columnspan=4, sticky="NSEW")
+	boton6=Button(root).grid(row=11, column=24, rowspan=2, columnspan=4, sticky="NSEW")
+	boton7=Button(root).grid(row=13, column=22, rowspan=2, columnspan=4, sticky="NSEW")
+	boton8=Button(root).grid(row=15, column=24, rowspan=2, columnspan=4, sticky="NSEW")
+	boton9=Button(root).grid(row=17, column=22, rowspan=2, columnspan=4, sticky="NSEW")
 
 
 	#----------Boton y funcion de Iniciar Partida---------
