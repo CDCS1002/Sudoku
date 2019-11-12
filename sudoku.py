@@ -8,12 +8,43 @@ Restricciones: Estan basados en la version python 3.7
 from tkinter import *
 from tkinter import messagebox
 from PIL import ImageTk,Image
+from random import *
+
+diccFaciles={1:[["","2","","","9","3","","1","8"],
+				["","1","","","7","","6","",""],
+				["7","4","","","","6","","","2"],
+				["","","","","","","","","7"],
+				["8","","2","","","1","5","4","9"],
+				["4","","3","5","8","","","",""],
+				["6","","","9","","","","2",""],
+				["","","","","","","8","",""],
+				["","3","7","","2","8","","","5"]],
+			 2:[["5","","","","8","6","","","1"],
+			 	["","","2","7","","1","6","",""],
+			 	["","7","1","","","","2","5",""],
+			 	["9","1","","","2","","","7",""],
+			 	["3","","","1","4","5","","","6"],
+			 	["","6","","","9","","","2","4"],
+			 	["","5","3","","","","4","6",""],
+			 	["","","8","9","","3","5","",""],
+			 	["2","","","5","1","","","","7"]],
+			 3:[["7","","","3","","","","",""],
+			 	["","1","9","4","","","2","",""],
+			 	["8","","2","","","1","3","4",""],
+			 	["","2","","","","","","",""],
+			 	["","","3","8","","7","5","1",""],
+			 	["","4","","","1","","9","7","6"],
+			 	["","8","","9","7","2","1","","3"],
+			 	["9","3","","","","4","","",""],
+			 	["","","6","","","5","8","",""]]}
+diccIntermedio={}
+diccDIficiles={}
 
 
+matrizActual=""
+option=""
 #--------------------Funcion de Jugar esto engomera toda la interfaz de jugar--------------------
 def jugarMenu():
-
-
 	#----------Grid de ayuda para colocar la interfaz---------
 	"""
 	Este grid al cambiarse el color de White a otro que se note, se mostrara una cuadricula que es 
@@ -47,29 +78,365 @@ def jugarMenu():
 		frameAyuda = Frame(frameSudoku, width=390, height=1, bg= "#9ACD32")
 		frameAyuda.grid(row= kS, column=0, columnspan=nS, sticky= "NW")
 
-	for i in range(0,9):
-		for k in range(0,9):e
-			BotonSudoku=Button(frameSudoku).grid(row=i, column=k, sticky="NSEW")
 
-
-
-	#--------------------Botones de Juego-----------------
+	#----------------------------Configuracion de Juego Numeros----------------------
 	"""
-	Estos son los botones que el jugador va a tener para poder jugar al sudoku,]
-	dependiendo del tipo de juego que el usuario seleccione, estos botones van a cambiar
+	En caso de que el jugador decida jugar al clasico sudoku de numeros, 
+	se llamara a esta funcion y colocara todo el juego segun los numeros 
+	del mismo juego
 	Entradas: No recibe
-	Salidas: Los botones de juego
+	Salida: Dibuja la matriz de Numeros
 	Restricciones: No tiene
 	"""
-	boton1=Button(root).grid(row=1, column=22, rowspan=2, columnspan=4, sticky="NSEW")
-	boton2=Button(root).grid(row=3, column=24, rowspan=2, columnspan=4, sticky="NSEW")
-	boton3=Button(root).grid(row=5, column=22, rowspan=2, columnspan=4, sticky="NSEW")
-	boton4=Button(root).grid(row=7, column=24, rowspan=2, columnspan=4, sticky="NSEW")
-	boton5=Button(root).grid(row=9, column=22, rowspan=2, columnspan=4, sticky="NSEW")
-	boton6=Button(root).grid(row=11, column=24, rowspan=2, columnspan=4, sticky="NSEW")
-	boton7=Button(root).grid(row=13, column=22, rowspan=2, columnspan=4, sticky="NSEW")
-	boton8=Button(root).grid(row=15, column=24, rowspan=2, columnspan=4, sticky="NSEW")
-	boton9=Button(root).grid(row=17, column=22, rowspan=2, columnspan=4, sticky="NSEW")
+	def configuracionNumeros():
+		def modificaMatrizNumeros(widget):
+			"""
+			Esta funcion coloca el texto en cada boton al que se le haga click
+			dependiendo de lo que el usuario quiera seleccionar, ademas de actualizar
+			la matriz de la partida actual
+			Entradas: El boton seleccionado
+			Salidas: La matriz actual actualizada y el texto en los botones
+			Restricciones: No tiene
+			"""
+			global matrizActual
+
+			x, y=widget.position
+			widget.config(text=option)
+			matrizActual[x][y]="option"
+			
+		def creaSudokuFaciles():#Crea la matriz si el usuario decide crear una partida facil
+			global matrizActual
+			partida=randint(1,3)
+			matrizActual=diccFaciles[partida]
+
+			i=0
+			k=0
+			for linea in diccFaciles[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizNumeros(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=diccFaciles[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
+				k=0
+
+		def creaSudokuIntermedio():#Crea la matriz si el usuario decide crear una partida intermedia
+			global matrizActual
+			partida=randint(1,3)
+			matrizActual=diccIntermedio[partida]
+			
+			i=0
+			k=0
+			for linea in diccIntermedio[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizNumeros(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=diccIntermedio[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
+				k=0
+
+		def creaSudokuDificiles():#crea la matriz si el usuario decide crear una partida dificil
+			global matrizActual
+			partida=randint(1,3)
+			matrizActual=diccDIficiles[partida]
+			
+			i=0
+			k=0
+			for linea in diccDIficiles[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizNumeros(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=diccDIficiles[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
+				k=0
+
+		#--------------------Botones de Juego Numeros-----------------
+		"""
+		Estos son los botones que el jugador va a tener para poder jugar al sudoku,
+		estos botones son los que se utilizaran en caso que el jugador desee jugar
+		al clasico sudoku con numeros
+		Entradas: No recibe
+		Salidas: Los botones de juego
+		Restricciones: No tiene
+		"""
+		def colocaOptionNumeros(widget):
+			global option
+
+			option=widget["text"]
+
+		def botonesNumeros():
+			f=1
+			k1=22
+			k2=24
+			n=1
+			for i in range(1,10):
+				if n==1:
+					boton=Button(root, text=i)
+					boton.config(command=lambda widget=boton: colocaOptionNumeros(widget))
+					boton.grid(row=f, column=k1, rowspan=2, columnspan=4, sticky="NSEW")
+					f+=2
+					n-=1
+				else:
+					boton=Button(root, text=i)
+					boton.config(command=lambda widget=boton: colocaOptionNumeros(widget))
+					boton.grid(row=f, column=k2, rowspan=2, columnspan=4, sticky="NSEW")
+					f+=2
+					n+=1
+
+
+	#----------------------------Configuracion de Juego Letras----------------------
+	"""
+	En caso de que el jugador decida jugar con una de las modificaciones
+	como lo es jugar con Letras en vez de numeros, se llamara a esta funcion 
+	y colocara todo el juego segun las letras del juego
+	Entradas: No recibe
+	Salida: Dibuja la matriz de Letras
+	Restricciones: No tiene
+	"""
+	def configuracionLetras():
+		def modificaMatrizLetras(widget):
+			global matrizActual
+
+			x, y=widget.position
+			widget.config(text=option)
+			matrizActual[x][y]="option"
+			
+		def creaSudokuFaciles():#Crea la matriz si el usuario decide crear una partida facil
+			global matrizActual
+			partida=randint(1,3)
+			matrizActual=diccFaciles[partida]
+			listaLetras=["","A","B","C","D","E","F","G","H","I"]
+
+			i=0
+			k=0
+			for linea in diccFaciles[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=listaLetras[int(diccFaciles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
+				k=0
+
+		def creaSudokuIntermedio():#Crea la matriz si el usuario decide crear una partida intermedio
+			global matrizActual
+			partida=randint(1,3)
+			matrizActual=diccIntermedio[partida]
+			listaLetras=["","A","B","C","D","E","F","G","H","I"]
+
+			i=0
+			k=0
+			for linea in diccIntermedio[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=listaLetras[int(diccIntermedio[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
+				k=0
+
+		def creaSudokuDificiles():#Crea la matriz si el usuario decide crear una partida dificil
+			global matrizActual
+			partida=randint(1,3)
+			matrizActual=diccDIficiles[partida]
+			listaLetras=["","A","B","C","D","E","F","G","H","I"]
+
+			i=0
+			k=0
+			for linea in diccDIficiles[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=listaLetras[int(diccDIficiles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
+				k=0
+
+		#--------------------Botones de Juego Letras-----------------
+		"""
+		Estos son los botones que el jugador va a tener para poder jugar al sudoku,
+		estos botones son los que se utilizaran en caso que el jugador desee jugar
+		con letras dentro del Sudoku
+		Entradas: No recibe
+		Salidas: Los botones de juego
+		Restricciones: No tiene
+		"""
+		def colocaOptionLetras(widget):
+			global option
+
+			option=widget["text"]
+
+		def botonesLetras():
+			f=1
+			k1=22
+			k2=24
+			n=1
+			listaLetras=["","A","B","C","D","E","F","G","H","I"]
+			
+			for i in range(1,10):
+				if n==1:
+					boton=Button(root, text=listaLetras[i])
+					boton.config(command=lambda widget=boton: colocaOptionLetras(widget))
+					boton.grid(row=f, column=k1, rowspan=2, columnspan=4, sticky="NSEW")
+					f+=2
+					n-=1
+				else:
+					boton=Button(root, text=listaLetras[i])
+					boton.config(command=lambda widget=boton: colocaOptionLetras(widget))
+					boton.grid(row=f, column=k2, rowspan=2, columnspan=4, sticky="NSEW")
+					f+=2
+					n+=1
+
+	
+	#----------------------------Configuracion de Juego Colores----------------------
+	"""
+	En caso de que el jugador decida jugar con una de las modificaciones
+	como lo es jugar con colores en vez de numeros, se llamara a esta funcion 
+	y colocara todo el juego segun los colores
+	Entradas: No recibe
+	Salida: Dibuja la matriz de colores
+	Restricciones: No tiene
+	"""
+	def configuracionColores():
+		def modificaMatrizColores(widget):
+			global matrizActual
+
+			x, y=widget.position
+			widget.config(bg=option)
+			matrizActual[x][y]="option"
+			
+		def creaSudokuFaciles():#Crea la matriz si el usuario decide crear una partida facil
+			global matrizActual
+			partida=randint(1,3)
+			matrizActual=diccFaciles[partida]
+			listaColores=["","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+
+			i=0
+			k=0
+			for linea in diccFaciles[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizColores(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, bg=listaColores[int(diccFaciles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
+				k=0
+
+		def creaSudokuIntermedio():#Crea la matriz si el usuario decide crear una partida intermedio
+			global matrizActual
+			partida=randint(1,3)
+			matrizActual=diccIntermedio[partida]
+			llistaColores=["","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+
+			i=0
+			k=0
+			for linea in diccIntermedio[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizColores(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=listaColores[int(diccIntermedio[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
+				k=0
+
+		def creaSudokuDificiles():#Crea la matriz si el usuario decide crear una partida dificil
+			global matrizActual
+			partida=randint(1,3)
+			matrizActual=diccDIficiles[partida]
+			listaColores=["","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+
+			i=0
+			k=0
+			for linea in diccDIficiles[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizColores(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=listaColores[int(diccDIficiles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
+				k=0
+
+		#--------------------Botones de Juego Letras-----------------
+		"""
+		Estos son los botones que el jugador va a tener para poder jugar al sudoku,
+		estos botones son los que se utilizaran en caso que el jugador desee jugar
+		con colores dentro del Sudoku
+		Entradas: No recibe
+		Salidas: Los botones de juego
+		Restricciones: No tiene
+		"""
+		def colocaOptionColores(widget):
+			global option
+
+			option=widget["bg"]
+
+		def botonesColores():
+			f=1
+			k1=22
+			k2=24
+			n=1
+			listaColores=["","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+			
+			for i in range(1,10):
+				if n==1:
+					boton=Button(root, bg=listaColores[i])
+					boton.config(command=lambda widget=boton: colocaOptionColores(widget))
+					boton.grid(row=f, column=k1, rowspan=2, columnspan=4, sticky="NSEW")
+					f+=2
+					n-=1
+				else:
+					boton=Button(root, bg=listaColores[i])
+					boton.config(command=lambda widget=boton: colocaOptionColores(widget))
+					boton.grid(row=f, column=k2, rowspan=2, columnspan=4, sticky="NSEW")
+					f+=2
+					n+=1
 
 
 	#----------Boton y funcion de Iniciar Partida---------
