@@ -41,12 +41,15 @@ diccFaciles={1:[["","2","","","9","3","","1","8"],
 			 	["","8","","9","7","2","1","","3"],
 			 	["9","3","","","","4","","",""],
 			 	["","","6","","","5","8","",""]]}
+
 diccIntermedio={}
+
 diccDIficiles={}
 
-
+partidaActual=""
 matrizActual=""
 option=""
+juegoIniciado=False
 #--------------------Funcion de Jugar esto engomera toda la interfaz de jugar--------------------
 def jugarMenu():
 	#----------Grid de ayuda para colocar la interfaz---------
@@ -92,6 +95,15 @@ def jugarMenu():
 	Salida: Dibuja la matriz de Numeros
 	Restricciones: No tiene
 	"""
+	def validacionGanar():
+		global matrizActual
+
+		for row in matrizActual:
+			for column in row:
+				if column=="":
+					return False
+		return True
+
 	def validacionDeSudoku(fila, columna):
 		"""
 		Esta funcion es a la que va a validar que un numero se pueda o no se pueda poner
@@ -223,51 +235,66 @@ def jugarMenu():
 			"""
 			global matrizActual
 			global option
+			global juegoIniciado
 
 			if option=="":
 				messagebox.showerror("ERROR", "Falta que seleccione el elemento")
 			else:
 				x, y=widget.position
-				widget.config(text=option)
-				matrizActual[x][y]=option
-				verificacion=validacionDeSudoku(x, y)
-				if verificacion==True:
-					pass
-				else:
+				texto=widget.cget("text")
+				if option==texto:
 					widget.config(text="")
 					matrizActual[x][y]=""
+				else:
+					widget.config(text=option)
+					matrizActual[x][y]=option
+					juegoIniciado=True
+					verificacion=validacionDeSudoku(x, y)
+					if verificacion==True:
+						validaGane=validacionGanar()
+						if validaGane==True:
+							messagebox.showinfo("FELICITACIONES", "Excelente! Juego completado")
+						else:
+							pass
+					else:
+						widget.config(text="")
+						matrizActual[x][y]=""
 			
 		def creaSudokuFaciles():#Crea la matriz si el usuario decide crear una partida facil
 			global matrizActual
 			global memoriaFaciles
+			global partidaActual
 
-			partida=randint(1,3)
-			contador=0
-			while partida in memoriaFaciles:
+			if partidaActual=="":
 				partida=randint(1,3)
-				contador+=1
-				if contador==10:
-					memoriaFaciles=[]
-					creaSudokuFaciles()
+				contador=0
+				while partida in memoriaFaciles:
+					partida=randint(1,3)
+					contador+=1
+					if contador==10:
+						memoriaFaciles=[]
+						creaSudokuFaciles()
+				partidaActual=partida
 			else:
-				memoriaFaciles.append(partida)
-				matrizActual=diccFaciles[partida]
+				partida=partidaActual
+			memoriaFaciles.append(partida)
+			matrizActual=diccFaciles[partida]
 
-				i=0
+			i=0
+			k=0
+			for linea in diccFaciles[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizNumeros(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=diccFaciles[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
 				k=0
-				for linea in diccFaciles[partida]:
-					for elemento in linea:
-						if elemento=="":
-							botonSudoku=Button(frameSudoku)
-							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizNumeros(widget))
-							botonSudoku.grid(row=i, column=k, sticky="NSEW")
-							botonSudoku.position=(i, k)
-							k+=1
-						else:
-							botonSudoku=Button(frameSudoku, text=diccFaciles[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
-							k+=1
-					i+=1
-					k=0
 
 		def creaSudokuIntermedio():#Crea la matriz si el usuario decide crear una partida intermedia
 			global matrizActual
@@ -319,7 +346,7 @@ def jugarMenu():
 				
 				i=0
 				k=0
-				for linea in diccDIficiles[partida]:
+				for linea in diccDificiles[partida]:
 					for elemento in linea:
 						if elemento=="":
 							botonSudoku=Button(frameSudoku)
@@ -328,7 +355,7 @@ def jugarMenu():
 							botonSudoku.position=(i, k)
 							k+=1
 						else:
-							botonSudoku=Button(frameSudoku, text=diccDIficiles[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+							botonSudoku=Button(frameSudoku, text=diccDificiles[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
 							k+=1
 					i+=1
 					k=0
@@ -367,7 +394,7 @@ def jugarMenu():
 					n+=1
 		creaSudokuFaciles()
 		botonesNumeros()
-
+	configuracionNumeros()
 	#----------------------------Configuracion de Juego Letras----------------------
 	"""
 	En caso de que el jugador decida jugar con una de las modificaciones
@@ -395,14 +422,19 @@ def jugarMenu():
 			else:
 				listaLetras=["","A","B","C","D","E","F","G","H","I"]
 				x, y=widget.position
-				widget.config(text=listaLetras[option])
-				matrizActual[x][y]=option
-				verificacion=validacionDeSudoku(x, y)
-				if verificacion==True:
-					pass
-				else:
+				texto=listaLetras.index(widget.cget("text"))
+				if option==texto:
 					widget.config(text="")
 					matrizActual[x][y]=""
+				else:
+					widget.config(text=listaLetras[option])
+					matrizActual[x][y]=option
+					verificacion=validacionDeSudoku(x, y)
+					if verificacion==True:
+						pass
+					else:
+						widget.config(text="")
+						matrizActual[x][y]=""
 				
 
 		def creaSudokuFaciles():#Crea la matriz si el usuario decide crear una partida facil
@@ -542,7 +574,7 @@ def jugarMenu():
 
 		creaSudokuFaciles()
 		botonesLetras()
-
+	#configuracionLetras()
 	#----------------------------Configuracion de Juego Colores----------------------
 	"""
 	En caso de que el jugador decida jugar con una de las modificaciones
@@ -568,16 +600,21 @@ def jugarMenu():
 			if option=="":
 				messagebox.showerror("ERROR", "Falta que seleccione el elemento")
 			else:
-				listaColores=["","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+				listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
 				x, y=widget.position
-				widget.config(bg=listaColores[option])
-				matrizActual[x][y]=option
-				verificacion=validacionDeSudoku(x, y)
-				if verificacion==True:
-					pass
-				else:
+				texto=listaColores.index(widget.cget("bg"))
+				if option==texto:
 					widget.config(bg="SystemButtonFace")
 					matrizActual[x][y]=""
+				else:
+					widget.config(bg=listaColores[option])
+					matrizActual[x][y]=option
+					verificacion=validacionDeSudoku(x, y)
+					if verificacion==True:
+						pass
+					else:
+						widget.config(bg="SystemButtonFace")
+						matrizActual[x][y]=""
 			
 		def creaSudokuFaciles():#Crea la matriz si el usuario decide crear una partida facil
 			global matrizActual
@@ -594,7 +631,7 @@ def jugarMenu():
 			else:
 				memoriaFaciles.append(partida)
 				matrizActual=diccFaciles[partida]
-				listaColores=["","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+				listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
 
 				i=0
 				k=0
@@ -627,7 +664,7 @@ def jugarMenu():
 			else:
 				memoriaIntermedios.append(partida)
 				matrizActual=diccIntermedio[partida]
-				llistaColores=["","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+				listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
 
 				i=0
 				k=0
@@ -660,7 +697,7 @@ def jugarMenu():
 			else:
 				memoriaDificiles.append(partida)
 				matrizActual=diccDIficiles[partida]
-				listaColores=["","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+				listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
 
 				i=0
 				k=0
@@ -690,7 +727,7 @@ def jugarMenu():
 		def colocaOptionColores(widget):
 			global option
 
-			listaColores=["","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+			listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
 			option=listaColores.index(widget["bg"])
 
 		def botonesColores():
@@ -698,7 +735,7 @@ def jugarMenu():
 			k1=22
 			k2=24
 			n=1
-			listaColores=["","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+			listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
 			
 			for i in range(1,10):
 				if n==1:
@@ -715,7 +752,7 @@ def jugarMenu():
 					n+=1
 		creaSudokuFaciles()
 		botonesColores()
-	configuracionColores()
+	#configuracionColores()
 	#----------Boton y funcion de Borrar Jugada---------
 	"""
 	Entradas: No recibe
@@ -748,9 +785,19 @@ def jugarMenu():
 		Salidas: Empieza a correr el reloj y permite al jugador jugar
 		Restricciones: No tiene
 		"""
-		pass
+		global juegoIniciado
 
-	botonTerminar=Button(root, bg="#008000", text="Terminar\nJuego", font="Arial, 12", fg="White").grid(row=20, column=13, rowspan=2, columnspan=4, sticky="NSEW")
+		if juegoIniciado==True:
+			verifica=messagebox.askyesno("ALERTA", "Seguro que desea terminar el juego?")
+			if verifica==True:
+				juegoIniciado=False
+				jugarMenu()
+			else:
+				pass
+		else:
+			messagebox.showerror("ERROR","No se ha iniciado el juego")
+
+	botonTerminar=Button(root, bg="#008000", text="Terminar\nJuego", font="Arial, 12", fg="White", command=terminar).grid(row=20, column=13, rowspan=2, columnspan=4, sticky="NSEW")
 	
 	#----------Boton y funcion de Borrar Juego---------
 	"""
@@ -759,9 +806,20 @@ def jugarMenu():
 	Restricciones: No tiene
 	"""
 	def borrarJuego():
-		pass
+		global juegoIniciado
+		global partidaActual
 
-	botonBorrarJuego=Button(root, bg="#6B8E23", text="Borrar\nJuego", font="Arial, 12", fg="White").grid(row=20, column=19, rowspan=2, columnspan=4, sticky="NSEW")
+		if juegoIniciado==True:
+			verifica=messagebox.askyesno("ALERTA", "Seguro que desea borrar el juego?")
+			if verifica==True:
+				juegoIniciado=False
+				jugarMenu()
+			else:
+				pass
+		else:
+			messagebox.showerror("ERROR", "No se ha iniciado el juego")
+
+	botonBorrarJuego=Button(root, bg="#6B8E23", text="Borrar\nJuego", font="Arial, 12", fg="White", command=borrarJuego).grid(row=20, column=19, rowspan=2, columnspan=4, sticky="NSEW")
 	
 	#----------Boton y funcion de Top 10---------
 	"""
