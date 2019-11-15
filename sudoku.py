@@ -92,6 +92,125 @@ def jugarMenu():
 	Salida: Dibuja la matriz de Numeros
 	Restricciones: No tiene
 	"""
+	def validacionDeSudoku(fila, columna):
+		"""
+		Esta funcion es a la que va a validar que un numero se pueda o no se pueda poner
+		en la casilla que el jugador decida hacer clickear, en caso que no se pueda se le
+		avisara con un respectivo mensaje el por que no se puede.
+		Entradas: La matriz actual
+		Salidas: Si se puede dejara la jugada y si no marcara que no se puede
+		Restricciones: No tiene
+		"""	
+		global matrizActual
+
+		Xfila=True
+		Xcolumna=True
+		Xsubmatriz=True
+		#esta es la parte que validara que el elemento no se encuentre en la fila donde se coloco
+		contador=0
+		for elemento in matrizActual[fila]:
+			if str(elemento)==str(matrizActual[fila][columna]):
+				contador+=1
+		if contador>1:
+			Xfila=False
+
+		
+		#esta es la parte que validara que el elemento no se encuentre en la columna donde se coloco
+		contador=0
+		i=0
+		while True:
+			try:
+				if str(matrizActual[fila][columna])==str(matrizActual[i][columna]):
+					contador+=1
+					i+=1
+				else:
+					i+=1
+			except IndexError:
+				if contador>1:
+					Xcolumna=False
+				break
+
+		#esta es la parte que validara que el elemento no se encuentre en la submatriz a la que pertenece ese elemento
+		contador=0
+		if fila>=0 and fila<=2:#si el elemento esta en las submatrices de la fila 0 a la 2 verificara la columna para saber exactamente en cual otra se encuentra
+			if columna>=0 and columna<=2:
+				for i in range(0,3):
+					for k in range(0,3):
+						if str(matrizActual[i][k])==str(matrizActual[fila][columna]):
+							contador+=1
+				if contador>1:
+					Xsubmatriz=False
+			elif columna>=3 and columna<=5:
+				for i in range(0,3):
+					for k in range(3,6):
+						if str(matrizActual[i][k])==str(matrizActual[fila][columna]):
+							contador+=1
+				if contador>1:
+					Xsubmatriz=False
+			else:
+				for i in range(0,3):
+					for k in range(6,9):
+						if str(matrizActual[i][k])==str(matrizActual[fila][columna]):
+							contador+=1
+				if contador>1:
+					Xsubmatriz=False
+		elif fila>=3 and fila<=5:#si el elemento esta en las submatrices de la fila 3 a la 5 verificara la columna para saber exactamente en cual otra se encuentra
+			if columna>=0 and fila<=2:
+				for i in range(3,6):
+					for k in range(0,3):
+						if str(matrizActual[i][k])==str(matrizActual[fila][columna]):
+							contador+=1
+				if contador>1:
+					Xsubmatriz=False
+			elif columna>=3 and columna<=5:
+				for i in range(3,5):
+					for k in range(3,6):
+						if str(matrizActual[i][k])==str(matrizActual[fila][columna]):
+							contador+=1
+				if contador>1:
+					Xsubmatriz=False
+			else:
+				for i in range(3,6):
+					for k in range(6,9):
+						if str(matrizActual[i][k])==str(matrizActual[fila][columna]):
+							contador+=1
+				if contador>1:
+					Xsubmatriz=False
+		else:#si el elemento esta en las submatrices de la fila 6 a la 8 verificara la columna para saber exactamente en cual otra se encuentra
+			if columna>=0 and fila<=2:
+				for i in range(6,9):
+					for k in range(0,3):
+						if str(matrizActual[i][k])==str(matrizActual[fila][columna]):
+							contador+=1
+				if contador>1:
+					Xsubmatriz=False
+			elif columna>=3 and columna<=5:
+				for i in range(6,9):
+					for k in range(3,6):
+						if str(matrizActual[i][k])==str(matrizActual[fila][columna]):
+							contador+=1
+				if contador>1:
+					Xsubmatriz=False
+			else:
+				for i in range(6,9):
+					for k in range(6,9):
+						if str(matrizActual[i][k])==str(matrizActual[fila][columna]):
+							contador+=1
+				if contador>1:
+					Xsubmatriz=False
+		if Xfila==False:
+			messagebox.showerror("ERROR", "El elemento ya se encuentra dentro de la fila")
+			return False
+		elif Xcolumna==False:
+			messagebox.showerror("ERROR", "El elemento ya se encuentra dentro de la columna")
+			return False
+		elif Xsubmatriz==False:
+			messagebox.showerror("ERROR", "El elemento ya se encuentra dentro de la submatriz")
+			return False
+		else:
+			return True
+
+
 	def configuracionNumeros():
 		def modificaMatrizNumeros(widget):
 			"""
@@ -111,6 +230,12 @@ def jugarMenu():
 				x, y=widget.position
 				widget.config(text=option)
 				matrizActual[x][y]=option
+				verificacion=validacionDeSudoku(x, y)
+				if verificacion==True:
+					pass
+				else:
+					widget.config(text="")
+					matrizActual[x][y]=""
 			
 		def creaSudokuFaciles():#Crea la matriz si el usuario decide crear una partida facil
 			global matrizActual
@@ -240,6 +365,8 @@ def jugarMenu():
 					boton.grid(row=f, column=k2, rowspan=2, columnspan=4, sticky="NSEW")
 					f+=2
 					n+=1
+		creaSudokuFaciles()
+		botonesNumeros()
 
 	#----------------------------Configuracion de Juego Letras----------------------
 	"""
@@ -264,13 +391,20 @@ def jugarMenu():
 			global option
 
 			if option=="":
-				messagebox.showerror("ERROR","Falta que seleccione el elemento")
+				messagebox.showerror("ERROR", "Falta que seleccione el elemento")
 			else:
 				listaLetras=["","A","B","C","D","E","F","G","H","I"]
 				x, y=widget.position
-				widget.config(text=option)
-				matrizActual[x][y]=listaLetras.index(option)
+				widget.config(text=listaLetras[option])
+				matrizActual[x][y]=option
+				verificacion=validacionDeSudoku(x, y)
+				if verificacion==True:
+					pass
+				else:
+					widget.config(text="")
+					matrizActual[x][y]=""
 				
+
 		def creaSudokuFaciles():#Crea la matriz si el usuario decide crear una partida facil
 			global matrizActual
 			global memoriaFaciles
@@ -382,7 +516,8 @@ def jugarMenu():
 		def colocaOptionLetras(widget):
 			global option
 
-			option=widget["text"]
+			listaLetras=["","A","B","C","D","E","F","G","H","I"]
+			option=listaLetras.index(widget["text"])
 
 		def botonesLetras():
 			f=1
@@ -404,6 +539,9 @@ def jugarMenu():
 					boton.grid(row=f, column=k2, rowspan=2, columnspan=4, sticky="NSEW")
 					f+=2
 					n+=1
+
+		creaSudokuFaciles()
+		botonesLetras()
 
 	#----------------------------Configuracion de Juego Colores----------------------
 	"""
@@ -434,6 +572,12 @@ def jugarMenu():
 				x, y=widget.position
 				widget.config(bg=listaColores[option])
 				matrizActual[x][y]=option
+				verificacion=validacionDeSudoku(x, y)
+				if verificacion==True:
+					pass
+				else:
+					widget.config(bg="SystemButtonFace")
+					matrizActual[x][y]=""
 			
 		def creaSudokuFaciles():#Crea la matriz si el usuario decide crear una partida facil
 			global matrizActual
@@ -515,24 +659,24 @@ def jugarMenu():
 					creaSudokuDificiles()
 			else:
 				memoriaDificiles.append(partida)
-			matrizActual=diccDIficiles[partida]
-			listaColores=["","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+				matrizActual=diccDIficiles[partida]
+				listaColores=["","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
 
-			i=0
-			k=0
-			for linea in diccDIficiles[partida]:
-				for elemento in linea:
-					if elemento=="":
-						botonSudoku=Button(frameSudoku)
-						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizColores(widget))
-						botonSudoku.grid(row=i, column=k, sticky="NSEW")
-						botonSudoku.position=(i, k)
-						k+=1
-					else:
-						botonSudoku=Button(frameSudoku, text=listaColores[int(diccDIficiles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
-						k+=1
-				i+=1
+				i=0
 				k=0
+				for linea in diccDIficiles[partida]:
+					for elemento in linea:
+						if elemento=="":
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizColores(widget))
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						else:
+							botonSudoku=Button(frameSudoku, text=listaColores[int(diccDIficiles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+							k+=1
+					i+=1
+					k=0
 
 		#--------------------Botones de Juego Letras-----------------
 		"""
@@ -569,27 +713,9 @@ def jugarMenu():
 					boton.grid(row=f, column=k2, rowspan=2, columnspan=4, sticky="NSEW")
 					f+=2
 					n+=1
-
-
-	#----------Boton y funcion de Iniciar Partida---------
-	"""
-	Entradas: No recibe
-	Salidas: Despliega el boton de iniciar dentro del root
-	Restricciones: No tiene
-	"""
-	def iniciar():
-		"""
-		Esta funcion sirve principalmente para empezar la partida, esto conlleva
-		iniciar el temporizador o el reloj depende de la configuracion que el usuario
-		haya escogido
-		Entradas: Recibe el evento del click del boton
-		Salidas: Empieza a correr el reloj y permite al jugador jugar
-		Restricciones: No tiene
-		"""
-		pass
-
-	botonIniciar=Button(root, bg="#008000", text="Iniciar\nJuego", font="Arial, 12", fg="White").grid(row=20, column=1, rowspan=2, columnspan=4, sticky="NSEW")
-	
+		creaSudokuFaciles()
+		botonesColores()
+	configuracionColores()
 	#----------Boton y funcion de Borrar Jugada---------
 	"""
 	Entradas: No recibe
@@ -676,10 +802,42 @@ def jugarMenu():
 	Salidas: Despliega el label y el entry de jugador dentro del root
 	Restricciones: No tiene
 	"""	
-	labelNombreJugador=Label(root, bg="#9ACD32", text="Nombre del Jugador:", font="Arial, 12", fg="White").grid(row=23, column=1, rowspan=2, columnspan=7, sticky="NSEW")
-	EntryNombreJugador=Entry(root, bg="White", font="Arial, 12")
+
+	def character_limit(entry_text):
+		if len(entry_text.get()) > 0:
+			entry_text.set(entry_text.get()[:30])
+
+	entry_text=StringVar()
+	EntryNombreJugador=Entry(root, bg="White", font="Arial, 12", textvariable=entry_text)
+	entry_text.trace("w", lambda *args: character_limit(entry_text))
 	EntryNombreJugador.grid(row=23, column=9, rowspan=2, columnspan=10, sticky="NSEW")
+	labelNombreJugador=Label(root, bg="#9ACD32", text="Nombre del Jugador:", font="Arial, 12", fg="White").grid(row=23, column=1, rowspan=2, columnspan=7, sticky="NSEW")
 	
+	#----------Boton y funcion de Iniciar Partida---------
+	"""
+	Entradas: No recibe
+	Salidas: Despliega el boton de iniciar dentro del root
+	Restricciones: No tiene
+	"""
+	def iniciar():
+		"""
+		Esta funcion sirve principalmente para empezar la partida, esto conlleva
+		iniciar el temporizador o el reloj depende de la configuracion que el usuario
+		haya escogido
+		Entradas: Recibe el evento del click del boton
+		Salidas: Empieza a correr el reloj y permite al jugador jugar
+		Restricciones: No tiene
+		"""
+		nombreJugador=EntryNombreJugador.get()
+		if nombreJugador=="":
+			messagebox.showerror("ERROR", "Debe dar un nombre de jugador antes de comenzar")
+		else:
+			botonIniciar.config(state="disable")
+
+	botonIniciar=Button(root, bg="#008000", text="Iniciar\nJuego", font="Arial, 12", fg="White", command=iniciar)
+	botonIniciar.grid(row=20, column=1, rowspan=2, columnspan=4, sticky="NSEW")
+	
+
 	#----------Boton y funciones de Timer y Reloj---------
 	"""
 	Entradas: No recibe
