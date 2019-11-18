@@ -42,9 +42,10 @@ diccFaciles={1:[["","2","","","9","3","","1","8"],
 			 	["9","3","","","","4","","",""],
 			 	["","","6","","","5","8","",""]]}
 
+
 diccIntermedio={}
 
-diccDIficiles={}
+diccDificiles={}
 
 partidaActual=""
 matrizActual=""
@@ -236,6 +237,7 @@ def jugarMenu():
 			global matrizActual
 			global option
 			global juegoIniciado
+			global partidaActual
 
 			if option=="":
 				messagebox.showerror("ERROR", "Falta que seleccione el elemento")
@@ -247,7 +249,9 @@ def jugarMenu():
 					matrizActual[x][y]=""
 				else:
 					widget.config(text=option)
+					print(diccFaciles[partidaActual])
 					matrizActual[x][y]=option
+					print(diccFaciles[partidaActual])
 					juegoIniciado=True
 					verificacion=validacionDeSudoku(x, y)
 					if verificacion==True:
@@ -264,6 +268,7 @@ def jugarMenu():
 			global matrizActual
 			global memoriaFaciles
 			global partidaActual
+			global diccFaciles
 
 			if partidaActual=="":
 				partida=randint(1,3)
@@ -278,11 +283,12 @@ def jugarMenu():
 			else:
 				partida=partidaActual
 			memoriaFaciles.append(partida)
-			matrizActual=diccFaciles[partida]
+			diccFacilesCopia=diccFaciles.copy()
+			matrizActual=diccFacilesCopia[partida]
 
 			i=0
 			k=0
-			for linea in diccFaciles[partida]:
+			for linea in matrizActual:#essta funcion sirve para dibujar la matriz, desde 0 ya que esta funcion solo realiza eso
 				for elemento in linea:
 					if elemento=="":
 						botonSudoku=Button(frameSudoku)
@@ -291,7 +297,7 @@ def jugarMenu():
 						botonSudoku.position=(i, k)
 						k+=1
 					else:
-						botonSudoku=Button(frameSudoku, text=diccFaciles[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+						botonSudoku=Button(frameSudoku, text=matrizActual[i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
 						k+=1
 				i+=1
 				k=0
@@ -786,11 +792,13 @@ def jugarMenu():
 		Restricciones: No tiene
 		"""
 		global juegoIniciado
+		global partidaActual
 
 		if juegoIniciado==True:
 			verifica=messagebox.askyesno("ALERTA", "Seguro que desea terminar el juego?")
 			if verifica==True:
 				juegoIniciado=False
+				partidaActual=""
 				jugarMenu()
 			else:
 				pass
@@ -871,7 +879,7 @@ def jugarMenu():
 	EntryNombreJugador.grid(row=23, column=9, rowspan=2, columnspan=10, sticky="NSEW")
 	labelNombreJugador=Label(root, bg="#9ACD32", text="Nombre del Jugador:", font="Arial, 12", fg="White").grid(row=23, column=1, rowspan=2, columnspan=7, sticky="NSEW")
 	
-	#----------Boton y funcion de Iniciar Partida---------
+	#----------Boton y funcion de Iniciar partida---------
 	"""
 	Entradas: No recibe
 	Salidas: Despliega el boton de iniciar dentro del root
@@ -996,7 +1004,6 @@ vinetas.add_command(label="Acerca de", command=acercaDeMenu)
 
 BarraSalir=Menu(vinetas, tearoff=False)
 vinetas.add_command(label="Salir", command=salirMenu)
-
 
 
 root.mainloop()
