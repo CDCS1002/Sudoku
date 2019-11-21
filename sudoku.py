@@ -9,10 +9,40 @@ from tkinter import *
 from tkinter import messagebox
 from PIL import ImageTk,Image
 from random import *
+import pickle
 
 memoriaFaciles=[]
 memoriaIntermedios=[]
 memoriaDificiles=[]
+
+
+plantillasFaciles={1:[["","2","","","9","3","","1","8"],
+				["","1","","","7","","6","",""],
+				["7","4","","","","6","","","2"],
+				["","","","","","","","","7"],
+				["8","","2","","","1","5","4","9"],
+				["4","","3","5","8","","","",""],
+				["6","","","9","","","","2",""],
+				["","","","","","","8","",""],
+				["","3","7","","2","8","","","5"]],
+			 2:[["5","","","","8","6","","","1"],
+			 	["","","2","7","","1","6","",""],
+			 	["","7","1","","","","2","5",""],
+			 	["9","1","","","2","","","7",""],
+			 	["3","","","1","4","5","","","6"],
+			 	["","6","","","9","","","2","4"],
+			 	["","5","3","","","","4","6",""],
+			 	["","","8","9","","3","5","",""],
+			 	["2","","","5","1","","","","7"]],
+			 3:[["7","","","3","","","","",""],
+			 	["","1","9","4","","","2","",""],
+			 	["8","","2","","","1","3","4",""],
+			 	["","2","","","","","","",""],
+			 	["","","3","8","","7","5","1",""],
+			 	["","4","","","1","","9","7","6"],
+			 	["","8","","9","7","2","1","","3"],
+			 	["9","3","","","","4","","",""],
+			 	["","","6","","","5","8","",""]]}
 
 diccFaciles={1:[["","2","","","9","3","","1","8"],
 				["","1","","","7","","6","",""],
@@ -44,15 +74,28 @@ diccFaciles={1:[["","2","","","9","3","","1","8"],
 
 
 diccIntermedio={}
+plantillasIntermedio={}
 
 diccDificiles={}
+plantillasDificiles={}
 
 partidaActual=""
 matrizActual=""
 option=""
+
+horas=""
+minutos=""
+segundos=""
+
+dificultadDePartida="Facil"
+tipoDePartida="Numeros"
+
+cargado=False
 juegoIniciado=False
+
 #--------------------Funcion de Jugar esto engomera toda la interfaz de jugar--------------------
 def jugarMenu():
+	global tipoDePartida
 	#----------Grid de ayuda para colocar la interfaz---------
 	"""
 	Este grid al cambiarse el color de White a otro que se note, se mostrara una cuadricula que es 
@@ -85,8 +128,7 @@ def jugarMenu():
 		frameAyuda.grid(row= 0, column=kS, rowspan=nS, sticky= "NW")
 		frameAyuda = Frame(frameSudoku, width=390, height=1, bg= "#9ACD32")
 		frameAyuda.grid(row= kS, column=0, columnspan=nS, sticky= "NW")
-
-
+	
 	#----------------------------Configuracion de Juego Numeros----------------------
 	"""
 	En caso de que el jugador decida jugar al clasico sudoku de numeros, 
@@ -225,6 +267,8 @@ def jugarMenu():
 
 
 	def configuracionNumeros():
+		global cargado
+		global tipoDePartida
 		def modificaMatrizNumeros(widget):
 			"""
 			Esta funcion coloca el texto en cada boton al que se le haga click
@@ -249,9 +293,7 @@ def jugarMenu():
 					matrizActual[x][y]=""
 				else:
 					widget.config(text=option)
-					print(diccFaciles[partidaActual])
 					matrizActual[x][y]=option
-					print(diccFaciles[partidaActual])
 					juegoIniciado=True
 					verificacion=validacionDeSudoku(x, y)
 					if verificacion==True:
@@ -268,7 +310,6 @@ def jugarMenu():
 			global matrizActual
 			global memoriaFaciles
 			global partidaActual
-			global diccFaciles
 
 			if partidaActual=="":
 				partida=randint(1,3)
@@ -283,12 +324,11 @@ def jugarMenu():
 			else:
 				partida=partidaActual
 			memoriaFaciles.append(partida)
-			diccFacilesCopia=diccFaciles.copy()
-			matrizActual=diccFacilesCopia[partida]
+			matrizActual=diccFaciles[partida]
 
 			i=0
 			k=0
-			for linea in matrizActual:#essta funcion sirve para dibujar la matriz, desde 0 ya que esta funcion solo realiza eso
+			for linea in plantillasFaciles[partida]:#essta funcion sirve para dibujar la matriz, desde 0 ya que esta funcion solo realiza eso
 				for elemento in linea:
 					if elemento=="":
 						botonSudoku=Button(frameSudoku)
@@ -297,7 +337,7 @@ def jugarMenu():
 						botonSudoku.position=(i, k)
 						k+=1
 					else:
-						botonSudoku=Button(frameSudoku, text=matrizActual[i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+						botonSudoku=Button(frameSudoku, text=plantillasFaciles[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
 						k+=1
 				i+=1
 				k=0
@@ -305,66 +345,75 @@ def jugarMenu():
 		def creaSudokuIntermedio():#Crea la matriz si el usuario decide crear una partida intermedia
 			global matrizActual
 			global memoriaIntermedios
+			global partidaActual
 
-			partida=randint(1,3)
-			contador=0
-			while partida in memoriaIntermedios:
+			if partidaActual=="":
 				partida=randint(1,3)
-				contador+=1
-				if contador==10:
-					memoriaIntermedios=[]
-					creaSudokuIntermedio()
+				contador=0
+				while partida in memoriaIntermedios:
+					partida=randint(1,3)
+					contador+=1
+					if contador==10:
+						memoriaIntermedios=[]
+						creaSudokuIntermedio()
+				partidaActual=partida
 			else:
-				memoriaIntermedios.append(partida)
-				matrizActual=diccIntermedio[partida]
-				
-				i=0
+				partida=partidaActual
+			memoriaIntermedios.append(partida)
+			matrizActual=diccIntermedio[partida]
+			
+			i=0
+			k=0
+			for linea in plantillasIntermedio[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizNumeros(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=plantillasIntermedio[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
 				k=0
-				for linea in diccIntermedio[partida]:
-					for elemento in linea:
-						if elemento=="":
-							botonSudoku=Button(frameSudoku)
-							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizNumeros(widget))
-							botonSudoku.grid(row=i, column=k, sticky="NSEW")
-							botonSudoku.position=(i, k)
-							k+=1
-						else:
-							botonSudoku=Button(frameSudoku, text=diccIntermedio[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
-							k+=1
-					i+=1
-					k=0
 
 		def creaSudokuDificiles():#crea la matriz si el usuario decide crear una partida dificil
 			global matrizActual
 			global memoriaDificiles
+			global partidaActual
+			global dificultadDePartida
 
-			partida=randint(1,3)
-			contador=0
-			while partida in memoriaDificiles:
+			if partidaActual=="":
 				partida=randint(1,3)
-				contador+=1
-				if contador==10:
-					memoriaDificiles=[]
-					creaSudokuDificiles()
+				contador=0
+				while partida in memoriaDificiles:
+					partida=randint(1,3)
+					contador+=1
+					if contador==10:
+						memoriaDificiles=[]
+						creaSudokuDificiles()
+				partidaActual=partida
 			else:
-				memoriaDificiles.append(partida)
-				matrizActual=diccDIficiles[partida]
-				
-				i=0
+				partida=partidaActual
+			memoriaDificiles.append(partida)
+			matrizActual=diccDificiles[partida]
+			
+			i=0
+			k=0
+			for linea in plantillasDificiles[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizNumeros(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=plantillasDificiles[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
 				k=0
-				for linea in diccDificiles[partida]:
-					for elemento in linea:
-						if elemento=="":
-							botonSudoku=Button(frameSudoku)
-							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizNumeros(widget))
-							botonSudoku.grid(row=i, column=k, sticky="NSEW")
-							botonSudoku.position=(i, k)
-							k+=1
-						else:
-							botonSudoku=Button(frameSudoku, text=diccDificiles[partida][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
-							k+=1
-					i+=1
-					k=0
 
 		#--------------------Botones de Juego Numeros-----------------
 		"""
@@ -398,9 +447,76 @@ def jugarMenu():
 					boton.grid(row=f, column=k2, rowspan=2, columnspan=4, sticky="NSEW")
 					f+=2
 					n+=1
-		creaSudokuFaciles()
-		botonesNumeros()
-	configuracionNumeros()
+
+		def dibujaMatrizGuardada():
+			global matrizActual
+			global nombreJugador
+			global partidaActual
+			global dificultadDePartida
+			global partidaActual
+
+			if dificultadDePartida=="Facil":
+				i=0
+				k=0
+				for linea in matrizActual:#esta funcion sirve para dibujar la matriz, desde la partida guardada
+					for elemento in linea:
+						if elemento=="" or elemento!=plantillasFaciles[partidaActual][i][k]:
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(text=matrizActual[i][k], command=lambda widget=botonSudoku: modificaMatrizNumeros(widget))
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						else:
+							botonSudoku=Button(frameSudoku, text=plantillasFaciles[partidaActual][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+							k+=1
+					i+=1
+					k=0
+			elif dificultadDePartida=="Intermedio":
+				i=0
+				k=0
+				for linea in matrizActual:#esta funcion sirve para dibujar la matriz, desde la partida guardada
+					for elemento in linea:
+						if elemento=="" or elemento!=plantillasIntermedio[partidaActual][i][k]:
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizNumeros(widget))
+							botonSudoku.config(text=matrizActual[i][k])
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						else:
+							botonSudoku=Button(frameSudoku, text=plantillasFaciles[partidaActual][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+							k+=1
+					i+=1
+					k=0
+			else:
+				i=0
+				k=0
+				for linea in matrizActual:#esta funcion sirve para dibujar la matriz, desde la partida guardada
+					for elemento in linea:
+						if elemento=="" or elemento!=plantillasDificiles[partidaActual][i][k]:
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizNumeros(widget))
+							botonSudoku.config(text=matrizActual[i][k])
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						else:
+							botonSudoku=Button(frameSudoku, text=plantillasFaciles[partidaActual][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+							k+=1
+					i+=1
+					k=0
+
+		if cargado==False:
+			if dificultadDePartida=="Facil":
+				creaSudokuFaciles()
+			elif dificultadDePartida=="Intermedio":
+				creaSudokuIntermedio()
+			else:
+				creaSudokuDificiles()
+			botonesNumeros()
+		else:
+			dibujaMatrizGuardada()
+
 	#----------------------------Configuracion de Juego Letras----------------------
 	"""
 	En caso de que el jugador decida jugar con una de las modificaciones
@@ -411,6 +527,8 @@ def jugarMenu():
 	Restricciones: No tiene
 	"""
 	def configuracionLetras():
+		global cargado
+		global tipoDePartida
 		def modificaMatrizLetras(widget):
 			"""
 			Esta funcion coloca el texto en cada boton al que se le haga click
@@ -446,101 +564,113 @@ def jugarMenu():
 		def creaSudokuFaciles():#Crea la matriz si el usuario decide crear una partida facil
 			global matrizActual
 			global memoriaFaciles
+			global partidaActual
 
-			partida=randint(1,3)
-			contador=0
-			while partida in memoriaFaciles:
+			if partidaActual=="":
 				partida=randint(1,3)
-				contador+=1
-				if contador==10:
-					memoriaFaciles=[]
-					creaSudokuFaciles()
+				contador=0
+				while partida in memoriaFaciles:
+					partida=randint(1,3)
+					contador+=1
+					if contador==10:
+						memoriaFaciles=[]
+						creaSudokuFaciles()
+				partidaActual=partida
 			else:
-				memoriaFaciles.append(partida)
-				matrizActual=diccFaciles[partida]
-				listaLetras=["","A","B","C","D","E","F","G","H","I"]
+				partida=partidaActual
+			memoriaFaciles.append(partida)
+			matrizActual=diccFaciles[partida]
+			listaLetras=["","A","B","C","D","E","F","G","H","I"]
 
-				i=0
+			i=0
+			k=0
+			for linea in plantillasFaciles[partida]:#essta funcion sirve para dibujar la matriz, desde 0 ya que esta funcion solo realiza eso
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=listaLetras[int(plantillasFaciles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
 				k=0
-				for linea in diccFaciles[partida]:
-					for elemento in linea:
-						if elemento=="":
-							botonSudoku=Button(frameSudoku)
-							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
-							botonSudoku.grid(row=i, column=k, sticky="NSEW")
-							botonSudoku.position=(i, k)
-							k+=1
-						else:
-							botonSudoku=Button(frameSudoku, text=listaLetras[int(diccFaciles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
-							k+=1
-					i+=1
-					k=0
 
 		def creaSudokuIntermedio():#Crea la matriz si el usuario decide crear una partida intermedio
 			global matrizActual
 			global memoriaIntermedios
+			global partidaActual
 
-			partida=randint(1,3)
-			contador=0
-			while partida in memoriaIntermedios:
+			if partidaActual=="":
 				partida=randint(1,3)
-				contador+=1
-				if contador==10:
-					memoriaIntermedios=[]
-					creaSudokuIntermedio()
+				contador=0
+				while partida in memoriaIntermedios:
+					partida=randint(1,3)
+					contador+=1
+					if contador==10:
+						memoriaIntermedios=[]
+						creaSudokuFaciles()
+				partidaActual=partida
 			else:
-				memoriaIntermedios.append(partida)
-				matrizActual=diccIntermedio[partida]
-				listaLetras=["","A","B","C","D","E","F","G","H","I"]
+				partida=partidaActual
+			memoriaIntermedios.append(partida)
+			matrizActual=diccIntermedio[partida]
+			listaLetras=["","A","B","C","D","E","F","G","H","I"]
 
-				i=0
+			i=0
+			k=0
+			for linea in plantillasIntermedio[partida]:#essta funcion sirve para dibujar la matriz, desde 0 ya que esta funcion solo realiza eso
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=listaLetras[int(plantillasIntermedio[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
 				k=0
-				for linea in diccIntermedio[partida]:
-					for elemento in linea:
-						if elemento=="":
-							botonSudoku=Button(frameSudoku)
-							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
-							botonSudoku.grid(row=i, column=k, sticky="NSEW")
-							botonSudoku.position=(i, k)
-							k+=1
-						else:
-							botonSudoku=Button(frameSudoku, text=listaLetras[int(diccIntermedio[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
-							k+=1
-					i+=1
-					k=0
 
 		def creaSudokuDificiles():#Crea la matriz si el usuario decide crear una partida dificil
 			global matrizActual
 			global memoriaDificiles
+			global partidaActual
 
-			partida=randint(1,3)
-			contador=0
-			while partida in memoriaDificiles:
+			if partidaActual=="":
 				partida=randint(1,3)
-				contador+=1
-				if contador==10:
-					memoriaDificiles=[]
-					creaSudokuDificiles()
+				contador=0
+				while partida in memoriaDificiles:
+					partida=randint(1,3)
+					contador+=1
+					if contador==10:
+						memoriaDificiles=[]
+						creaSudokuFaciles()
+				partidaActual=partida
 			else:
-				memoriaDificiles.append(partida)
-				matrizActual=diccDIficiles[partida]
-				listaLetras=["","A","B","C","D","E","F","G","H","I"]
+				partida=partidaActual
+			memoriaDificiles.append(partida)
+			matrizActual=diccDificiles[partida]
+			listaLetras=["","A","B","C","D","E","F","G","H","I"]
 
-				i=0
+			i=0
+			k=0
+			for linea in plantillasDificiles[partida]:#essta funcion sirve para dibujar la matriz, desde 0 ya que esta funcion solo realiza eso
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, text=listaLetras[int(plantillasDificiles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
 				k=0
-				for linea in diccDIficiles[partida]:
-					for elemento in linea:
-						if elemento=="":
-							botonSudoku=Button(frameSudoku)
-							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
-							botonSudoku.grid(row=i, column=k, sticky="NSEW")
-							botonSudoku.position=(i, k)
-							k+=1
-						else:
-							botonSudoku=Button(frameSudoku, text=listaLetras[int(diccDIficiles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
-							k+=1
-					i+=1
-					k=0
 
 		#--------------------Botones de Juego Letras-----------------
 		"""
@@ -578,9 +708,82 @@ def jugarMenu():
 					f+=2
 					n+=1
 
-		creaSudokuFaciles()
-		botonesLetras()
-	#configuracionLetras()
+		def dibujaMatrizGuardada():
+			global matrizActual
+			global nombreJugador
+			global partidaActual
+			global dificultadDePartida
+			global partidaActual
+
+			listaLetras=["","A","B","C","D","E","F","G","H","I"]
+			if dificultadDePartida=="Facil":
+				i=0
+				k=0
+				for linea in matrizActual:#esta funcion sirve para dibujar la matriz, desde la partida guardada
+					for elemento in linea:
+						if elemento=="":
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(text="", command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						elif elemento!=plantillasFaciles[partidaActual][i][k]:
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(text=listaLetras[matrizActual[i][k]], command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						else:
+							botonSudoku=Button(frameSudoku, text=listaLetras[int(plantillasFaciles[partidaActual][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+							k+=1
+					i+=1
+					k=0
+			elif dificultadDePartida=="Intermedio":
+				i=0
+				k=0
+				for linea in matrizActual:#esta funcion sirve para dibujar la matriz, desde la partida guardada
+					for elemento in linea:
+						if elemento=="" or elemento!=plantillasIntermedio[partidaActual][i][k]:
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+							botonSudoku.config(text=listaLetras[matrizActual[i][k]])
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						else:
+							botonSudoku=Button(frameSudoku, text=listaLetras[plantillasFaciles[partidaActual][i][k]], state="disable").grid(row=i, column=k, sticky="NSEW")
+							k+=1
+					i+=1
+					k=0
+			else:
+				i=0
+				k=0
+				for linea in matrizActual:#esta funcion sirve para dibujar la matriz, desde la partida guardada
+					for elemento in linea:
+						if elemento=="" or elemento!=plantillasDificiles[partidaActual][i][k]:
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+							botonSudoku.config(text=listaLetras[matrizActual[i][k]])
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						else:
+							botonSudoku=Button(frameSudoku, text=listaLetras[plantillasFaciles[partidaActual][i][k]], state="disable").grid(row=i, column=k, sticky="NSEW")
+							k+=1
+					i+=1
+					k=0
+
+		if cargado==False:
+			if dificultadDePartida=="Facil":
+				creaSudokuFaciles()
+			elif dificultadDePartida=="Intermedio":
+				creaSudokuIntermedio()
+			else:
+				creaSudokuDificiles()
+			botonesLetras()
+		else:
+			dibujaMatrizGuardada()
+
 	#----------------------------Configuracion de Juego Colores----------------------
 	"""
 	En caso de que el jugador decida jugar con una de las modificaciones
@@ -591,6 +794,8 @@ def jugarMenu():
 	Restricciones: No tiene
 	"""
 	def configuracionColores():
+		global cargado
+		global tipoDePartida
 		def modificaMatrizColores(widget):
 			"""
 			Esta funcion coloca el color en cada boton al que se le haga click
@@ -625,101 +830,113 @@ def jugarMenu():
 		def creaSudokuFaciles():#Crea la matriz si el usuario decide crear una partida facil
 			global matrizActual
 			global memoriaFaciles
+			global partidaActual
 
-			partida=randint(1,3)
-			contador=0
-			while partida in memoriaFaciles:
+			if partidaActual=="":
 				partida=randint(1,3)
-				contador+=1
-				if contador==10:
-					memoriaFaciles=[]
-					creaSudokuFaciles()
+				contador=0
+				while partida in memoriaFaciles:
+					partida=randint(1,3)
+					contador+=1
+					if contador==10:
+						memoriaFaciles=[]
+						creaSudokuFaciles()
+				partidaActual=partida
 			else:
-				memoriaFaciles.append(partida)
-				matrizActual=diccFaciles[partida]
-				listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+				partida=partidaActual
+			memoriaFaciles.append(partida)
+			matrizActual=diccFaciles[partida]
+			listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
 
-				i=0
+			i=0
+			k=0
+			for linea in plantillasFaciles[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizColores(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, bg=listaColores[int(plantillasFaciles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
 				k=0
-				for linea in diccFaciles[partida]:
-					for elemento in linea:
-						if elemento=="":
-							botonSudoku=Button(frameSudoku)
-							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizColores(widget))
-							botonSudoku.grid(row=i, column=k, sticky="NSEW")
-							botonSudoku.position=(i, k)
-							k+=1
-						else:
-							botonSudoku=Button(frameSudoku, bg=listaColores[int(diccFaciles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
-							k+=1
-					i+=1
-					k=0
 
 		def creaSudokuIntermedio():#Crea la matriz si el usuario decide crear una partida intermedio
 			global matrizActual
-			global memoriaIntermedios
+			global memoriaDificiles
+			global partidaActual
 
-			partida=randint(1,3)
-			contador=0
-			while partida in memoriaIntermedios:
+			if partidaActual=="":
 				partida=randint(1,3)
-				contador+=1
-				if contador==10:
-					memoriaIntermedios=[]
-					creaSudokuIntermedio()
+				contador=0
+				while partida in memoriaDificiles:
+					partida=randint(1,3)
+					contador+=1
+					if contador==10:
+						memoriaDificiles=[]
+						creaSudokuFaciles()
+				partidaActual=partida
 			else:
-				memoriaIntermedios.append(partida)
-				matrizActual=diccIntermedio[partida]
-				listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+				partida=partidaActual
+			memoriaDificiles.append(partida)
+			matrizActual=diccIntermedio[partida]
+			listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
 
-				i=0
+			i=0
+			k=0
+			for linea in plantillasIntermedio[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizColores(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, bg=listaColores[int(plantillasIntermedio[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
 				k=0
-				for linea in diccIntermedio[partida]:
-					for elemento in linea:
-						if elemento=="":
-							botonSudoku=Button(frameSudoku)
-							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizColores(widget))
-							botonSudoku.grid(row=i, column=k, sticky="NSEW")
-							botonSudoku.position=(i, k)
-							k+=1
-						else:
-							botonSudoku=Button(frameSudoku, text=listaColores[int(diccIntermedio[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
-							k+=1
-					i+=1
-					k=0
 
 		def creaSudokuDificiles():#Crea la matriz si el usuario decide crear una partida dificil
 			global matrizActual
 			global memoriaDificiles
+			global partidaActual
 
-			partida=randint(1,3)
-			contador=0
-			while partida in memoriaDificiles:
+			if partidaActual=="":
 				partida=randint(1,3)
-				contador+=1
-				if contador==10:
-					memoriaDificiles=[]
-					creaSudokuDificiles()
+				contador=0
+				while partida in memoriaDificiles:
+					partida=randint(1,3)
+					contador+=1
+					if contador==10:
+						memoriaDificiles=[]
+						creaSudokuFaciles()
+				partidaActual=partida
 			else:
-				memoriaDificiles.append(partida)
-				matrizActual=diccDIficiles[partida]
-				listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+				partida=partidaActual
+			memoriaDificiles.append(partida)
+			matrizActual=diccDificiles[partida]
+			listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
 
-				i=0
+			i=0
+			k=0
+			for linea in plantillasDificiles[partida]:
+				for elemento in linea:
+					if elemento=="":
+						botonSudoku=Button(frameSudoku)
+						botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizColores(widget))
+						botonSudoku.grid(row=i, column=k, sticky="NSEW")
+						botonSudoku.position=(i, k)
+						k+=1
+					else:
+						botonSudoku=Button(frameSudoku, bg=listaColores[int(plantillasDificiles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+						k+=1
+				i+=1
 				k=0
-				for linea in diccDIficiles[partida]:
-					for elemento in linea:
-						if elemento=="":
-							botonSudoku=Button(frameSudoku)
-							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizColores(widget))
-							botonSudoku.grid(row=i, column=k, sticky="NSEW")
-							botonSudoku.position=(i, k)
-							k+=1
-						else:
-							botonSudoku=Button(frameSudoku, text=listaColores[int(diccDIficiles[partida][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
-							k+=1
-					i+=1
-					k=0
 
 		#--------------------Botones de Juego Letras-----------------
 		"""
@@ -756,9 +973,100 @@ def jugarMenu():
 					boton.grid(row=f, column=k2, rowspan=2, columnspan=4, sticky="NSEW")
 					f+=2
 					n+=1
-		creaSudokuFaciles()
-		botonesColores()
-	#configuracionColores()
+
+		def dibujaMatrizGuardada():
+			global matrizActual
+			global nombreJugador
+			global partidaActual
+			global dificultadDePartida
+			global partidaActual
+
+			listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+			if dificultadDePartida=="Facil":
+				i=0
+				k=0
+				for linea in matrizActual:#esta funcion sirve para dibujar la matriz, desde la partida guardada
+					for elemento in linea:
+						if elemento=="":
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(bg="SystemButtonFace", command=lambda widget=botonSudoku: modificaMatrizColores(widget))
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						elif elemento!=plantillasFaciles[partidaActual][i][k]:
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(bg=listaColores[int(matrizActual[i][k])], command=lambda widget=botonSudoku: modificaMatrizColores(widget))
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						else:
+							botonSudoku=Button(frameSudoku, bg=listaColores[int(plantillasFaciles[partidaActual][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
+							k+=1
+					i+=1
+					k=0
+			elif dificultadDePartida=="Intermedio":
+				i=0
+				k=0
+				for linea in matrizActual:#esta funcion sirve para dibujar la matriz, desde la partida guardada
+					for elemento in linea:
+						if elemento=="":
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(bg="SystemButtonFace", command=lambda widget=botonSudoku: modificaMatrizColores(widget))
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						elif elemento!=plantillasIntermedio[partidaActual][i][k]:
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(bg=listaColores[int(matrizActual[i][k])], command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						else:
+							botonSudoku=Button(frameSudoku, bg=listaColores[plantillasIntermedio[partidaActual][i][k]], state="disable").grid(row=i, column=k, sticky="NSEW")
+							k+=1
+					i+=1
+					k=0
+			else:
+				i=0
+				k=0
+				for linea in matrizActual:#esta funcion sirve para dibujar la matriz, desde la partida guardada
+					for elemento in linea:
+						if elemento=="":
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(bg="SystemButtonFace", command=lambda widget=botonSudoku: modificaMatrizColores(widget))
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						elif elemento!=plantillasDificiles[partidaActual][i][k]:
+							botonSudoku=Button(frameSudoku)
+							botonSudoku.config(bg=listaColores[int(matrizActual[i][k])], command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+							botonSudoku.grid(row=i, column=k, sticky="NSEW")
+							botonSudoku.position=(i, k)
+							k+=1
+						else:
+							botonSudoku=Button(frameSudoku, bg=listaColores[plantillasDificiles[partidaActual][i][k]], state="disable").grid(row=i, column=k, sticky="NSEW")
+							k+=1
+					i+=1
+					k=0
+
+		if cargado==False:
+			if dificultadDePartida=="Facil":
+				creaSudokuFaciles()
+			elif dificultadDePartida=="Intermedio":
+				creaSudokuIntermedio()
+			else:
+				creaSudokuDificiles()
+			botonesColores()
+		else:
+			dibujaMatrizGuardada()
+
+	if tipoDePartida=="Numeros":
+		configuracionNumeros()
+	elif tipoDePartida=="Letras":
+		configuracionLetras()
+	else:
+		configuracionColores()
+
 	#----------Boton y funcion de Borrar Jugada---------
 	"""
 	Entradas: No recibe
@@ -847,20 +1155,69 @@ def jugarMenu():
 	Restricciones: No tiene
 	"""	
 	def guardar():
-		pass
+		global matrizActual
+		global nombreJugador
+		global horas
+		global minutos
+		global segundos
+		global partidaActual
+		global tipoDePartida
 
-	botonGuardar=Button(root, bg="#6B8E23", text="Guardar\nJuego", font="Arial, 12", fg="White").grid(row=26, column=3, rowspan=2, columnspan=4, sticky="NSEW")
+		archivo=open("sudoku2019juegoactual.dat", "wb")
+		pickle.dump(matrizActual, archivo)
+		pickle.dump(partidaActual, archivo)
+		pickle.dump(dificultadDePartida, archivo)
+		pickle.dump(tipoDePartida, archivo)
+		pickle.dump(EntryNombreJugador.get(), archivo)
+		pickle.dump(horas, archivo)
+		pickle.dump(minutos, archivo)
+		pickle.dump(segundos, archivo)
+		archivo.close()
+		verificacion=messagebox.askyesno("PARTIDA GUARDADA", "Partida guardada con exito, desea seguir jugando?")
+		if verificacion==True:
+			pass
+		else:
+			jugarMenu()
+
+	botonGuardar=Button(root, bg="#6B8E23", text="Guardar\nJuego", font="Arial, 12", fg="White", command=guardar).grid(row=26, column=3, rowspan=2, columnspan=4, sticky="NSEW")
 	
 	#----------Boton y funcion de Cargar---------
 	"""
 	Entradas: No recibe
 	Salidas: Despliega el boton de cargar dentro del root
 	Restricciones: No tiene
-	"""
+	"""	
 	def cargar():
-		pass
+		global matrizActual
+		global nombreJugador
+		global horas
+		global minutos
+		global segundos
+		global partidaActual
+		global tipoDePartida
+		global cargado
 
-	botonCargar=Button(root, bg="#008000", text="Cargar\nJuego", font="Arial, 12", fg="White").grid(row=26, column=10, rowspan=2, columnspan=4, sticky="NSEW")
+		archivo=open("sudoku2019juegoactual.dat", "rb")
+		matrizActual=pickle.load(archivo)
+		partidaActual=pickle.load(archivo)
+		dificultadDePartida=pickle.load(archivo)
+		tipoDePartida=pickle.load(archivo)
+		nombreJugador=pickle.load(archivo)
+		horas=pickle.load(archivo)
+		minutos=pickle.load(archivo)
+		segundos=pickle.load(archivo)
+		archivo.close()
+		cargado=True
+
+		if tipoDePartida=="Numeros":
+			configuracionNumeros()
+		elif tipoDePartida=="Letras":
+			configuracionLetras()
+		else:
+			configuracionColores()
+
+
+	botonCargar=Button(root, bg="#008000", text="Cargar\nJuego", font="Arial, 12", fg="White", command=cargar).grid(row=26, column=10, rowspan=2, columnspan=4, sticky="NSEW")
 	
 	#----------Despliegue del Nombre y Entry del jugador---------
 	"""
@@ -927,6 +1284,71 @@ def jugarMenu():
 
 
 #--------------------Funciones del Menu desplegable (Basicas)--------------------
+#---Funcion de Configurar--
+def configurarMenu():
+	"""
+	Esta funcion es la que va a desplegar todo el menu de configurar, incluyendo 
+	la configuracion de dificultad, reloj y tipo de partida para que el usuario pueda
+	seleccionar toda la configuracion del como desea jugar.
+	"""
+	def aceptarConfiguracion():
+		pass
+
+	def seleccTipoPartida():
+		pass
+
+	ventanaConfigurar=Toplevel()
+	ventanaConfigurar.title("CONFIGURACION")
+	ventanaConfigurar.iconbitmap("icono_sudoku.ico")
+	ventanaConfigurar.geometry("700x550")
+	ventanaConfigurar.config(bg="#9ACD32")
+	n=16
+	for k in range(15):
+		frameAyuda = Frame(ventanaConfigurar, width=1, height=550, bg= "#9ACD32")
+		frameAyuda.grid(row= 0, column=k, rowspan=n, sticky= "NW")
+		frameAyuda = Frame(ventanaConfigurar, width=700, height=1, bg= "#9ACD32")
+		frameAyuda.grid(row= k, column=0, columnspan=n, sticky= "NW")
+	
+	botonAceptarConfig=Button(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Aceptar Configuracion", font="Arial, 12", command=aceptarConfiguracion)
+	botonAceptarConfig.grid(row=2, column=10, columnspan=5, sticky="NSEW")
+
+	labelDificultad=Label(ventanaConfigurar, bg="#9ACD32", fg="Black", text="1. Nivel: ", font="Arial, 12").grid(row=1, column=0, rowspan=2, columnspan=4, sticky="NSEW")
+	RBFacil=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Facil", font="Arial, 12")
+	RBFacil.grid(row=1, column=4, columnspan=4, sticky="NSEW")
+	RBFacil.select()
+	RBIntermedio=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Intermedio", font="Arial, 12")
+	RBIntermedio.grid(row=2, column=4, columnspan=4, sticky="NSEW")
+	RBIntermedio.deselect()
+	RBDificil=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Dificil", font="Arial, 12")
+	RBDificil.grid(row=3, column=4, columnspan=4, sticky="NSEW")
+	RBDificil.deselect()
+	
+	labelReloj=Label(ventanaConfigurar, bg="#9ACD32", fg="Black", text="2. Reloj: ", font="Arial, 12").grid(row=6, column=0, rowspan=2, columnspan=4, sticky="NSEW")
+	RBSI=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Si", font="Arial, 12")
+	RBSI.grid(row=6, column=4, columnspan=4, sticky="NSEW")
+	RBSI.select()
+	RBNO=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="No", font="Arial, 12")
+	RBNO.grid(row=7, column=4, columnspan=4, sticky="NSEW")
+	RBNO.deselect()
+	RBTimer=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Timer", font="Arial, 12")
+	RBTimer.grid(row=8, column=4, columnspan=4, sticky="NSEW")
+	RBTimer.deselect()
+	labelHoras=Label(ventanaConfigurar, bg="#808e9b", fg="Black", text="Horas", font="Arial, 12").grid(row=6, column=9, columnspan=2, sticky="NSEW")
+	labelMinutos=Label(ventanaConfigurar, bg="#d2dae2", fg="Black", text="Minutos", font="Arial, 12").grid(row=6, column=11, columnspan=2, sticky="NSEW")
+	labelSegundos=Label(ventanaConfigurar, bg="#808e9b", fg="Black", text="Segundos", font="Arial, 12").grid(row=6, column=13, columnspan=2, sticky="NSEW")
+	EntryHoras=Entry(ventanaConfigurar, bg="White", font="Arial, 12", width=2, justify="center")
+	EntryHoras.grid(row=7, column=9, columnspan=2, sticky="NSEW")
+	EntryMinutos=Entry(ventanaConfigurar, bg="White", font="Arial, 12", width=2, justify="center")
+	EntryMinutos.grid(row=7, column=11, columnspan=2, sticky="NSEW")
+	EntrySegundos=Entry(ventanaConfigurar, bg="White", font="Arial, 12", width=2, justify="center")
+	EntrySegundos.grid(row=7, column=13, columnspan=2, sticky="NSEW")
+
+	labelTipo=Label(ventanaConfigurar, bg="#9ACD32", fg="Black", text="3. Tipo de Partida: ", font="Arial, 12").grid(row=11, column=0, rowspan=2, columnspan=4, sticky="NSEW")
+	botonTipo=Button(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Seleccionar tipo de partida", font="Arial, 12", command=seleccTipoPartida)
+	botonTipo.grid(row=11, column=5, rowspan=2, columnspan=6, sticky="NSEW")
+
+	ventanaConfigurar.mainloop()
+
 #---Funcion de Ayuda---
 def ayudaMenu():
 	"""
@@ -994,7 +1416,7 @@ vinetas.add_command(label="Jugar", command=jugarMenu)
 
 
 BarraConfigurar=Menu(vinetas, tearoff=False)
-vinetas.add_command(label="Configurar")
+vinetas.add_command(label="Configurar", command=configurarMenu)
 
 BarraAyuda=Menu(vinetas, tearoff=False)
 vinetas.add_cascade(label="Ayuda", command=ayudaMenu)
