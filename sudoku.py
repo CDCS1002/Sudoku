@@ -73,29 +73,141 @@ diccFaciles={1:[["","2","","","9","3","","1","8"],
 			 	["","","6","","","5","8","",""]]}
 
 
-diccIntermedio={}
-plantillasIntermedio={}
+diccIntermedio={1:[["6","","","","","","","",""],
+				["","1","9","","8","3","","","4"],
+				["7","3","","1","","","","9",""],
+				["","","","","6","","","4",""],
+				["9","","","3","","","","","1"],
+				["4","","","8","","9","","5",""],
+				["","","8","9","","","","2",""],
+				["3","","2","6","","8","","",""],
+				["1","","","","4","","6","","3"]],
+			 2:[["","","5","","","2","","",""],
+			 	["","2","","7","3","4","","",""],
+			 	["","6","","8","","","","","9"],
+			 	["","9","","1","2","8","7","",""],
+			 	["","","7","","","6","","","2"],
+			 	["","8","4","","","3","1","",""],
+			 	["","7","","3","5","","","8",""],
+			 	["","","","4","","","2","",""],
+			 	["5","","","","","","6","1",""]],
+			 3:[["","9","","","","","5","3",""],
+			 	["7","","","8","1","","","4",""],
+			 	["","","","5","","","8","","7"],
+			 	["","","4","","6","","","1",""],
+			 	["","","","","","","","",""],
+			 	["","1","","","","","7","","3"],
+			 	["","","7","4","5","","9","6","2"],
+			 	["9","4","","","","6","1","8",""],
+			 	["","","6","","8","2","","",""]]}
+plantillasIntermedio={1:[["6","","","","","","","",""],
+				["","1","9","","8","3","","","4"],
+				["7","3","","1","","","","9",""],
+				["","","","","6","","","4",""],
+				["9","","","3","","","","","1"],
+				["4","","","8","","9","","5",""],
+				["","","8","9","","","","2",""],
+				["3","","2","6","","8","","",""],
+				["1","","","","4","","6","","3"]],
+			 2:[["","","5","","","2","","",""],
+			 	["","2","","7","3","4","","",""],
+			 	["","6","","8","","","","","9"],
+			 	["","9","","1","2","8","7","",""],
+			 	["","","7","","","6","","","2"],
+			 	["","8","4","","","3","1","",""],
+			 	["","7","","3","5","","","8",""],
+			 	["","","","4","","","2","",""],
+			 	["5","","","","","","6","1",""]],
+			 3:[["","9","","","","","5","3",""],
+			 	["7","","","8","1","","","4",""],
+			 	["","","","5","","","8","","7"],
+			 	["","","4","","6","","","1",""],
+			 	["","","","","","","","",""],
+			 	["","1","","","","","7","","3"],
+			 	["","","7","4","5","","9","6","2"],
+			 	["9","4","","","","6","1","8",""],
+			 	["","","6","","8","2","","",""]]}
 
-diccDificiles={}
-plantillasDificiles={}
+diccDificiles={1:[["","","","","","","","","9"],
+				["","","","","","7","","1",""],
+				["7","6","","9","","","3","","8"],
+				["","","1","6","","","4","3",""],
+				["","","","","","","","","6"],
+				["","5","","","7","","","8",""],
+				["","","3","","","1","","2",""],
+				["9","1","","","","3","","",""],
+				["","","","","","5","1","9",""]],
+			 2:[["","6","","","1","","5","",""],
+			 	["1","","","","","5","","7",""],
+			 	["","9","8","","","4","","",""],
+			 	["8","","","","","","","",""],
+			 	["","4","","","","","","","6"],
+			 	["","","","","","3","","9","1"],
+			 	["9","","","3","","2","","",""],
+			 	["","","7","5","","8","","","3"],
+			 	["","","","1","","","2","","4"]],
+			 3:[["2","","6","","","1","","",""],
+			 	["9","4","","8","","","","",""],
+			 	["","","","","","9","","","7"],
+			 	["","","","","7","","","","1"],
+			 	["3","","","","","5","4","2",""],
+			 	["","1","4","","","","3","","8"],
+			 	["","","1","4","9","","8","",""],
+			 	["","","","","","","","","5"],
+			 	["4","8","","","","","","",""]]}
+plantillasDificiles={1:[["","","","","","","","","9"],
+				["","","","","","7","","1",""],
+				["7","6","","9","","","3","","8"],
+				["","","1","6","","","4","3",""],
+				["","","","","","","","","6"],
+				["","5","","","7","","","8",""],
+				["","","3","","","1","","2",""],
+				["9","1","","","","3","","",""],
+				["","","","","","5","1","9",""]],
+			 2:[["","6","","","1","","5","",""],
+			 	["1","","","","","5","","7",""],
+			 	["","9","8","","","4","","",""],
+			 	["8","","","","","","","",""],
+			 	["","4","","","","","","","6"],
+			 	["","","","","","3","","9","1"],
+			 	["9","","","3","","2","","",""],
+			 	["","","7","5","","8","","","3"],
+			 	["","","","1","","","2","","4"]],
+			 3:[["2","","6","","","1","","",""],
+			 	["9","4","","8","","","","",""],
+			 	["","","","","","9","","","7"],
+			 	["","","","","7","","","","1"],
+			 	["3","","","","","5","4","2",""],
+			 	["","1","4","","","","3","","8"],
+			 	["","","1","4","9","","8","",""],
+			 	["","","","","","","","","5"],
+			 	["4","8","","","","","","",""]]}
 
 partidaActual=""
 matrizActual=""
 option=""
 
-horas=""
-minutos=""
-segundos=""
+configReloj=True
+horas=0
+minutos=0
+segundos=0
+proceso=0
 
 dificultadDePartida="Facil"
 tipoDePartida="Numeros"
 
 cargado=False
 juegoIniciado=False
+listaWidgets=[]
 
 #--------------------Funcion de Jugar esto engomera toda la interfaz de jugar--------------------
 def jugarMenu():
 	global tipoDePartida
+	global configReloj
+	global horas
+	global minutos
+	global segundos
+	global dificultadDePartida
 	#----------Grid de ayuda para colocar la interfaz---------
 	"""
 	Este grid al cambiarse el color de White a otro que se note, se mostrara una cuadricula que es 
@@ -140,11 +252,14 @@ def jugarMenu():
 	"""
 	def validacionGanar():
 		global matrizActual
+		global horas, minutos, segundos
+		global dificultadDePartida
 
 		for row in matrizActual:
 			for column in row:
 				if column=="":
 					return False
+		
 		return True
 
 	def validacionDeSudoku(fila, columna):
@@ -282,24 +397,26 @@ def jugarMenu():
 			global option
 			global juegoIniciado
 			global partidaActual
+			global listaWidgets
 
 			if option=="":
 				messagebox.showerror("ERROR", "Falta que seleccione el elemento")
 			else:
 				x, y=widget.position
 				texto=widget.cget("text")
+				listaWidgets.append(widget)
 				if option==texto:
 					widget.config(text="")
 					matrizActual[x][y]=""
 				else:
 					widget.config(text=option)
 					matrizActual[x][y]=option
-					juegoIniciado=True
 					verificacion=validacionDeSudoku(x, y)
 					if verificacion==True:
 						validaGane=validacionGanar()
 						if validaGane==True:
 							messagebox.showinfo("FELICITACIONES", "Excelente! Juego completado")
+							jugador=jugadoresTOP10(EntryNombreJugador.get(), "{}:{}:{}".format(horas, minutos, segundos), dificultadDePartida)
 						else:
 							pass
 					else:
@@ -426,8 +543,12 @@ def jugarMenu():
 		"""
 		def colocaOptionNumeros(widget):
 			global option
+			global juegoIniciado
 
-			option=widget["text"]
+			if juegoIniciado==False:
+				messagebox.showerror("ERROR", "Debe iniciar el juego antes de poder jugar")
+			else:
+				option=widget["text"]
 
 		def botonesNumeros():
 			f=1
@@ -453,7 +574,6 @@ def jugarMenu():
 			global nombreJugador
 			global partidaActual
 			global dificultadDePartida
-			global partidaActual
 
 			if dificultadDePartida=="Facil":
 				i=0
@@ -484,7 +604,7 @@ def jugarMenu():
 							botonSudoku.position=(i, k)
 							k+=1
 						else:
-							botonSudoku=Button(frameSudoku, text=plantillasFaciles[partidaActual][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+							botonSudoku=Button(frameSudoku, text=plantillasIntermedio[partidaActual][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
 							k+=1
 					i+=1
 					k=0
@@ -501,7 +621,7 @@ def jugarMenu():
 							botonSudoku.position=(i, k)
 							k+=1
 						else:
-							botonSudoku=Button(frameSudoku, text=plantillasFaciles[partidaActual][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
+							botonSudoku=Button(frameSudoku, text=plantillasDificiles[partidaActual][i][k], state="disable").grid(row=i, column=k, sticky="NSEW")
 							k+=1
 					i+=1
 					k=0
@@ -684,8 +804,11 @@ def jugarMenu():
 		def colocaOptionLetras(widget):
 			global option
 
-			listaLetras=["","A","B","C","D","E","F","G","H","I"]
-			option=listaLetras.index(widget["text"])
+			if juegoIniciado==False:
+				messagebox.showerror("ERROR", "Debe iniciar el juego antes de poder jugar")
+			else:
+				listaLetras=["","A","B","C","D","E","F","G","H","I"]
+				option=listaLetras.index(widget["text"])
 
 		def botonesLetras():
 			f=1
@@ -729,7 +852,7 @@ def jugarMenu():
 							k+=1
 						elif elemento!=plantillasFaciles[partidaActual][i][k]:
 							botonSudoku=Button(frameSudoku)
-							botonSudoku.config(text=listaLetras[matrizActual[i][k]], command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
+							botonSudoku.config(text=listaLetras[int(matrizActual[i][k])], command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
 							botonSudoku.grid(row=i, column=k, sticky="NSEW")
 							botonSudoku.position=(i, k)
 							k+=1
@@ -746,12 +869,12 @@ def jugarMenu():
 						if elemento=="" or elemento!=plantillasIntermedio[partidaActual][i][k]:
 							botonSudoku=Button(frameSudoku)
 							botonSudoku.config(command=lambda widget=botonSudoku: modificaMatrizLetras(widget))
-							botonSudoku.config(text=listaLetras[matrizActual[i][k]])
+							botonSudoku.config(text=listaLetras[int(matrizActual[i][k])])
 							botonSudoku.grid(row=i, column=k, sticky="NSEW")
 							botonSudoku.position=(i, k)
 							k+=1
 						else:
-							botonSudoku=Button(frameSudoku, text=listaLetras[plantillasFaciles[partidaActual][i][k]], state="disable").grid(row=i, column=k, sticky="NSEW")
+							botonSudoku=Button(frameSudoku, text=listaLetras[int(plantillasIntermedio[partidaActual][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
 							k+=1
 					i+=1
 					k=0
@@ -768,7 +891,7 @@ def jugarMenu():
 							botonSudoku.position=(i, k)
 							k+=1
 						else:
-							botonSudoku=Button(frameSudoku, text=listaLetras[plantillasFaciles[partidaActual][i][k]], state="disable").grid(row=i, column=k, sticky="NSEW")
+							botonSudoku=Button(frameSudoku, text=listaLetras[plantillasDificiles[partidaActual][i][k]], state="disable").grid(row=i, column=k, sticky="NSEW")
 							k+=1
 					i+=1
 					k=0
@@ -949,9 +1072,13 @@ def jugarMenu():
 		"""
 		def colocaOptionColores(widget):
 			global option
+			global juegoIniciado
 
-			listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
-			option=listaColores.index(widget["bg"])
+			if juegoIniciado==False:
+				messagebox.showerror("ERROR", "Debe iniciar el juego antes de poder jugar")
+			else:
+				listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+				option=listaColores.index(widget["bg"])
 
 		def botonesColores():
 			f=1
@@ -1022,7 +1149,7 @@ def jugarMenu():
 							botonSudoku.position=(i, k)
 							k+=1
 						else:
-							botonSudoku=Button(frameSudoku, bg=listaColores[plantillasIntermedio[partidaActual][i][k]], state="disable").grid(row=i, column=k, sticky="NSEW")
+							botonSudoku=Button(frameSudoku, bg=listaColores[int(plantillasIntermedio[partidaActual][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
 							k+=1
 					i+=1
 					k=0
@@ -1044,7 +1171,7 @@ def jugarMenu():
 							botonSudoku.position=(i, k)
 							k+=1
 						else:
-							botonSudoku=Button(frameSudoku, bg=listaColores[plantillasDificiles[partidaActual][i][k]], state="disable").grid(row=i, column=k, sticky="NSEW")
+							botonSudoku=Button(frameSudoku, bg=listaColores[int(plantillasDificiles[partidaActual][i][k])], state="disable").grid(row=i, column=k, sticky="NSEW")
 							k+=1
 					i+=1
 					k=0
@@ -1081,9 +1208,22 @@ def jugarMenu():
 		Salidas: Elimina la ultima jugada que se hizo
 		Restricciones: No tiene
 		"""
-		pass
+		global listaWidgets
+		global matrizActual
 
-	botonBorrarJugada=Button(root, bg="#6B8E23", text="Borrar\nJugada", font="Arial, 12", fg="White").grid(row=20, column=7, rowspan=2, columnspan=4, sticky="NSEW")
+		if juegoIniciado==True:
+			if listaWidgets==[]:
+				messagebox.showerror("ERROR", "No hay mas jugadas para eliminar")
+			else:
+				boton=listaWidgets[-1]
+				boton.config(text="")
+				x, y=boton.position
+				matrizActual[x][y]=""
+				listaWidgets.pop()
+		else:
+			messagebox.showerror("ERROR", "El juego no ha iniciado")
+
+	botonBorrarJugada=Button(root, bg="#6B8E23", text="Borrar\nJugada", font="Arial, 12", fg="White", command=borrarJugada).grid(row=20, column=7, rowspan=2, columnspan=4, sticky="NSEW")
 	
 	#----------Boton y funcion de Terminar---------
 	"""
@@ -1144,9 +1284,154 @@ def jugarMenu():
 	Restricciones: No tiene
 	"""
 	def top10():
-		pass
+		class jugadoresTOP10():
+			"""
+			Esta es la clase que va a mantener y recibir a los jugadores 
+			en forma de POO, cada jugador va a tener de caracteristicas:
+			un nombre, un tiempo y una dificultad y el programa los debe
+			organizar y ordenar.
+			"""
+			def __init__(self, n, t, d):
+				self.nombre=n
+				self.tiempo=t
+				self.dificultad=d
 
-	botonTOP10=Button(root, bg="#008000", text="TOP 10", font="Arial, 12", fg="White").grid(row=20, column=25, rowspan=2, columnspan=4, sticky="NSEW")
+			def asignaTOP(self):
+				if self.dificultad=="Facil":
+					listaFaciles.append((self.nombre, self.tiempo))
+				elif self.dificultad=="Intermedio":
+					listaIntermedio.append((self.nombre, self.tiempo))
+				else:
+					listaDificiles.append((self.nombre, self.tiempo))
+
+		def topFacil():
+			"""
+			Esta funcion se encarga e crear el topLevel del Top para la
+			dificultad facil, junto con los jugadores creados de objetos
+			y sus tiempos.
+			Entradas: El evento del boton
+			Salidas: El topLevel
+			Restricciones: No tiene
+			"""
+			ventanaFacil=Toplevel()
+			ventanaFacil.geometry("400x500")
+			ventanaFacil.title("Nivel Facil")
+			ventanaFacil.config(bg="#9ACD32")
+			def creaTop():
+				archivo=open("sudoku2019top10.dat", "rb")
+				n=14
+				for k in range(0,n):
+					frameAyuda = Frame(ventanaFacil, width=1, height=500, bg= "Blue")
+					frameAyuda.grid(row= 0, column=k, rowspan=n, sticky= "NW")
+					frameAyuda = Frame(ventanaFacil, width=400, height=1, bg= "Blue")
+					frameAyuda.grid(row= k, column=0, columnspan=n, sticky= "NW")
+				labelNOMBRETOP=Label(ventanaFacil, bg="#9ACD32", text="JUGADOR", font="Arial, 14").grid(row=0, column=0, columnspan=7, rowspan=2, sticky="NSEW")
+				labelTIEMPOTOP=Label(ventanaFacil, bg="#9ACD32", text="TIEMPO", font="Arial, 14").grid(row=0, column=7, columnspan=7, rowspan=2, sticky="NSEW")
+				fila=2
+				while True:
+					try:
+						jugador=pickle.load(archivo)
+						Label(ventanaFacil, bg="#9ACD32", text=jugador, font="Arial, 14").grid(row=fila, column=0, columnspan=14, rowspan=2, sticky="NSEW")
+						fila+=2
+					except EOFError:
+						break
+				archivo.close()
+
+			creaTop()
+			ventanaFacil.mainloop()
+
+		def topIntermedio():
+			"""
+			Esta funcion se encarga e crear el topLevel del Top para la
+			dificultad intermedio, junto con los jugadores creados de objetos
+			y sus tiempos.
+			Entradas: El evento del boton
+			Salidas: El topLevel
+			Restricciones: No tiene
+			"""
+			ventanaIntermedio=Toplevel()
+			ventanaIntermedio.geometry("400x500")
+			ventanaIntermedio.title("Nivel Intermedio")
+			ventanaIntermedio.config(bg="#9ACD32")
+			def creaTop():
+				archivo=open("sudoku2019top10.dat", "rb")
+				n=14
+				for k in range(0,n):
+					frameAyuda = Frame(ventanaIntermedio, width=1, height=500, bg= "Blue")
+					frameAyuda.grid(row= 0, column=k, rowspan=n, sticky= "NW")
+					frameAyuda = Frame(ventanaIntermedio, width=400, height=1, bg= "Blue")
+					frameAyuda.grid(row= k, column=0, columnspan=n, sticky= "NW")
+				labelNOMBRETOP=Label(ventanaIntermedio, bg="#9ACD32", text="JUGADOR", font="Arial, 14").grid(row=0, column=0, columnspan=7, rowspan=2, sticky="NSEW")
+				labelTIEMPOTOP=Label(ventanaIntermedio, bg="#9ACD32", text="TIEMPO", font="Arial, 14").grid(row=0, column=7, columnspan=7, rowspan=2, sticky="NSEW")
+				fila=2
+				while True:
+					try:
+						jugador=pickle.load(archivo)
+						Label(ventanaIntermedio, bg="#9ACD32", text=jugador, font="Arial, 14").grid(row=fila, column=0, columnspan=14, rowspan=2, sticky="NSEW")
+						fila+=2
+					except EOFError:
+						break
+				archivo.close()
+
+			creaTop()
+			ventanaIntermedio.mainloop()
+
+		def topDificil():
+			"""
+			Esta funcion se encarga e crear el topLevel del Top para la
+			dificultad dificil, junto con los jugadores creados de objetos
+			y sus tiempos.
+			Entradas: El evento del boton
+			Salidas: El topLevel
+			Restricciones: No tiene
+			"""
+			ventanaDificil=Toplevel()
+			ventanaDificil.geometry("400x500")
+			ventanaDificil.title("Nivel Dificil")
+			ventanaDificil.config(bg="#9ACD32")
+			def creaTop():
+				archivo=open("sudoku2019top10.dat", "rb")
+				n=14
+				for k in range(0,n):
+					frameAyuda = Frame(ventanaDificil, width=1, height=500, bg= "Blue")
+					frameAyuda.grid(row= 0, column=k, rowspan=n, sticky= "NW")
+					frameAyuda = Frame(ventanaDificil, width=400, height=1, bg= "Blue")
+					frameAyuda.grid(row= k, column=0, columnspan=n, sticky= "NW")
+				labelNOMBRETOP=Label(ventanaDificil, bg="#9ACD32", text="JUGADOR", font="Arial, 14").grid(row=0, column=0, columnspan=7, rowspan=2, sticky="NSEW")
+				labelTIEMPOTOP=Label(ventanaDificil, bg="#9ACD32", text="TIEMPO", font="Arial, 14").grid(row=0, column=7, columnspan=7, rowspan=2, sticky="NSEW")
+				fila=2
+				while True:
+					try:
+						jugador=pickle.load(archivo)
+						Label(ventanaDificil, bg="#9ACD32", text=jugador, font="Arial, 14").grid(row=fila, column=0, columnspan=14, rowspan=2, sticky="NSEW")
+						fila+=2
+					except EOFError:
+						break
+				archivo.close()
+
+			creaTop()
+			ventanaDificil.mainloop()
+				
+		ventanaTop=Toplevel()
+		ventanaTop.geometry("400x600")
+		ventanaTop.config(bg="#9ACD32")
+		ventanaTop.title("TOP 10")
+		ventanaTop.iconbitmap("top10.ico")
+		vinetas= Menu()
+		ventanaTop.config(menu=vinetas)
+
+		BarraFacil=Menu(vinetas, tearoff=False)
+		vinetas.add_command(label="Facil", command=topFacil)
+
+		BarraIntermedio=Menu(vinetas, tearoff=False)
+		vinetas.add_command(label="Intermedio", command=topIntermedio)
+
+		BarraDificil=Menu(vinetas, tearoff=False)
+		vinetas.add_command(label="Dificil", command=topDificil)
+
+
+
+	botonTOP10=Button(root, bg="#008000", text="TOP 10", font="Arial, 12", fg="White", command=top10).grid(row=20, column=25, rowspan=2, columnspan=4, sticky="NSEW")
 	
 	#----------Boton y funcion de Guardar---------
 	"""
@@ -1196,6 +1481,8 @@ def jugarMenu():
 		global partidaActual
 		global tipoDePartida
 		global cargado
+		global option
+		global juegoIniciado
 
 		archivo=open("sudoku2019juegoactual.dat", "rb")
 		matrizActual=pickle.load(archivo)
@@ -1208,6 +1495,8 @@ def jugarMenu():
 		segundos=pickle.load(archivo)
 		archivo.close()
 		cargado=True
+		juegoIniciado=False
+		option=""
 
 		if tipoDePartida=="Numeros":
 			configuracionNumeros()
@@ -1236,6 +1525,56 @@ def jugarMenu():
 	EntryNombreJugador.grid(row=23, column=9, rowspan=2, columnspan=10, sticky="NSEW")
 	labelNombreJugador=Label(root, bg="#9ACD32", text="Nombre del Jugador:", font="Arial, 12", fg="White").grid(row=23, column=1, rowspan=2, columnspan=7, sticky="NSEW")
 	
+	#----------Boton y funciones de Timer y Reloj---------
+	"""
+	Entradas: No recibe
+	Salidas: Despliega el label que muestra el timer y el reloj dentro del root
+	Restricciones: No tiene
+	"""
+	def timer(h=int(horas), m=int(minutos), s=int(segundos)):
+		global proceso
+		global horas
+		global minutos
+		global segundos
+
+		if s <= 0:
+			s=59
+			m=m-1
+			if m <= 0:
+				m=0
+				h=h-1
+				if h <= 0:
+					h=0
+		time['text'] = str(h)+":"+str(m)+":"+str(s)
+		proceso=time.after(1000, timer, (h), (m), (s-1))
+		horas=h
+		minutos=m
+		segundos=s
+
+	def reloj(h=0, m=0, s=0):
+		global proceso
+		global horas
+		global minutos
+		global segundos
+
+		if s >= 60:
+			s=0
+			m+=1
+			if m >= 60:
+				m=0
+				h+=1
+		if h >= 99:
+			h=0
+		time['text'] = str(h)+":"+str(m)+":"+str(s)
+		proceso=time.after(1000, reloj, (h), (m), (s+1))
+
+	labelHoras=Label(root, bg="#808e9b", text="Horas", font="Arial, 11").grid(row=23, column=20, rowspan=2, columnspan=3, sticky="NSEW")
+	labelMinutos=Label(root, bg="#d2dae2", text="Minutos", font="Arial, 11").grid(row=23, column=23, rowspan=2, columnspan=3, sticky="NSEW")
+	labelSegundos=Label(root, bg="#808e9b", text="Segundos", font="Arial, 11").grid(row=23, column=26, rowspan=2, columnspan=3, sticky="NSEW")
+	time = Label(root, fg="Black", font=("","38"))
+	time.grid(row=25, column=20, rowspan=2, columnspan=9, sticky="NSEW")
+
+
 	#----------Boton y funcion de Iniciar partida---------
 	"""
 	Entradas: No recibe
@@ -1251,35 +1590,31 @@ def jugarMenu():
 		Salidas: Empieza a correr el reloj y permite al jugador jugar
 		Restricciones: No tiene
 		"""
-		nombreJugador=EntryNombreJugador.get()
+		global juegoIniciado
+		global cargado
+		global nombreJugador
+
+		if cargado==False:
+			nombreJugador=EntryNombreJugador.get()
+		else:
+			entry_text.set(nombreJugador)
 		if nombreJugador=="":
 			messagebox.showerror("ERROR", "Debe dar un nombre de jugador antes de comenzar")
 		else:
-			botonIniciar.config(state="disable")
+			juegoIniciado=True
+			if configReloj==True:
+				botonIniciar.config(state="disable")
+				reloj()
+			elif configReloj=="Timer":
+				botonIniciar.config(state="disable")
+				timer()
+			else:
+				botonIniciar.config(state="disable")
 
 	botonIniciar=Button(root, bg="#008000", text="Iniciar\nJuego", font="Arial, 12", fg="White", command=iniciar)
 	botonIniciar.grid(row=20, column=1, rowspan=2, columnspan=4, sticky="NSEW")
 	
-
-	#----------Boton y funciones de Timer y Reloj---------
-	"""
-	Entradas: No recibe
-	Salidas: Despliega el label que muestra el timer y el reloj dentro del root
-	Restricciones: No tiene
-	"""
-	def timer():
-		pass
-
-	def reloj():
-		pass
-
-	labelHoras=Label(root, bg="#808e9b", text="Horas", font="Arial, 11").grid(row=23, column=20, rowspan=2, columnspan=3, sticky="NSEW")
-	labelMinutos=Label(root, bg="#d2dae2", text="Minutos", font="Arial, 11").grid(row=23, column=23, rowspan=2, columnspan=3, sticky="NSEW")
-	labelSegundos=Label(root, bg="#808e9b", text="Segundos", font="Arial, 11").grid(row=23, column=26, rowspan=2, columnspan=3, sticky="NSEW")
-	time = Label(root, fg="Black", font=("","12"))
-	time.grid(row=25, column=20, rowspan=2, columnspan=9, sticky="NSEW")
-
-	LabelINDDificultad=Label(root, bg="#9ACD32", borderwidth=1, text="Dificultad:", font="Arial, 12", fg="White").grid(row=27, column=20, rowspan=2, columnspan=9, sticky="NSEW")
+	LabelINDDificultad=Label(root, bg="#9ACD32", borderwidth=1, text="Dificultad: {}".format(dificultadDePartida), font="Arial, 12", fg="White").grid(row=27, column=20, rowspan=2, columnspan=9, sticky="NSEW")
 
 
 
@@ -1292,14 +1627,163 @@ def configurarMenu():
 	seleccionar toda la configuracion del como desea jugar.
 	"""
 	def aceptarConfiguracion():
-		pass
+		"""
+		Esta funcion lo que realiza es colocar en las variables globales de los tiempos
+		el tiempo que el usuario haya definido
+		Entradas: El evento del boton
+		Salidas: Toda la configuracion definida
+		Restricciones: No tiene
+		"""
+		global configReloj
+		global horas
+		global minutos
+		global segundos
+
+		if configReloj=="Timer":
+			if int(EntryHoras.get())>4 or int(EntryMinutos.get())>=60 or int(EntrySegundos.get())>=60:
+				messagebox.showerror("ERROR", "HORAS ENTRE (0-4), MINUTOS ENTRE (0-59), SEGUNDOS (0-59)")
+			else:
+				horas=EntryHoras.get()
+				minutos=EntryMinutos.get()
+				segundos=EntrySegundos.get()
+				ventanaConfigurar.destroy()
+		else:
+			ventanaConfigurar.destroy()
 
 	def seleccTipoPartida():
-		pass
+		"""
+		Esta seccion es la que permite al usuario escoger el tipo de partida con el que 
+		desee jugar
+		Entradas: El evento del boton
+		Salidas: El Toplevel para la escogencia del tipo
+		Restricciones no tiene
+		"""
+		def tipoNumeros():#Elige que se juega con numeros
+			global tipoDePartida
+
+			tipoDePartida="Numeros"
+
+		def tipoLetras():#Elige que se juega con Letras
+			global tipoDePartida
+
+			tipoDePartida="Letras"
+
+		def tipoColores():#Elige que se juega con Colores
+			global tipoDePartida
+
+			tipoDePartida="Colores"
+
+		def tipoElegible():#Elige que se juega con la que el programador desee
+			pass
+
+
+		ventanaTipoPartida=Toplevel()
+		ventanaTipoPartida.geometry("700x400")
+		ventanaTipoPartida.title("TIPO DE PARTIDA")
+		ventanaTipoPartida.config(bg="#9ACD32")
+		
+		n=23
+		for k in range(0,n):
+			frameAyuda = Frame(ventanaTipoPartida, width=1, height=400, bg= "#9ACD32")
+			frameAyuda.grid(row= 0, column=k, rowspan=n, sticky= "NW")
+			frameAyuda = Frame(ventanaTipoPartida, width=700, height=1, bg= "#9ACD32")
+			frameAyuda.grid(row= k, column=0, columnspan=n, sticky= "NW")
+
+		RBNumeros=Radiobutton(ventanaTipoPartida, bg="#9ACD32", fg="Black", text="Numeros", font="Arial, 12", command=tipoNumeros)
+		RBNumeros.grid(row=0, column=1, rowspan=2, columnspan=3, sticky="NSEW")
+		RBLetras=Radiobutton(ventanaTipoPartida, bg="#9ACD32", fg="Black", text="Letras", font="Arial, 12", command=tipoLetras)
+		RBLetras.grid(row=0, column=7, rowspan=2, columnspan=3, sticky="NSEW")
+		RBColores=Radiobutton(ventanaTipoPartida, bg="#9ACD32", fg="Black", text="Colores", font="Arial, 12", command=tipoColores)
+		RBColores.grid(row=0, column=13, rowspan=2, columnspan=3, sticky="NSEW")
+		RBElegible=Radiobutton(ventanaTipoPartida, bg="#9ACD32", fg="Black", text="Elegible", font="Arial, 12", command=tipoElegible)
+		RBElegible.grid(row=0, column=19, rowspan=2, columnspan=3, sticky="NSEW")
+
+		#Dibuja los botones de muestra de los numeros
+		n=1
+		f=3
+		k=1
+		for i in range(0, 9):
+			if k==1:
+				Button(ventanaTipoPartida, text=n, font="Arial, 12").grid(row=f, column=1, rowspan=2, columnspan=2, sticky="NSEW")
+				f+=2
+				n+=1
+				k+=1
+			else:
+				Button(ventanaTipoPartida, text=n, font="Arial, 12").grid(row=f, column=2, rowspan=2, columnspan=2, sticky="NSEW")
+				f+=2
+				n+=1
+				k-=1
+
+		#Dibuja los botones de muestra de las letras
+		listaLetras=["","A","B","C","D","E","F","G","H","I"]
+		n=1
+		f=3
+		k=1
+		for i in range(0, 9):
+			if k==1:
+				Button(ventanaTipoPartida, text=listaLetras[n], font="Arial, 12").grid(row=f, column=7, rowspan=2, columnspan=2, sticky="NSEW")
+				f+=2
+				n+=1
+				k+=1
+			else:
+				Button(ventanaTipoPartida, text=listaLetras[n], font="Arial, 12").grid(row=f, column=8, rowspan=2, columnspan=2, sticky="NSEW")
+				f+=2
+				n+=1
+				k-=1
+
+		#Dibuja los botones de muestra de los colores
+		listaColores=["SystemButtonFace","Blue","Light Grey","#ffa502","Light Green","Brown","Red","Yellow","Purple","Black"]
+		n=1
+		f=3
+		k=1
+		for i in range(0, 9):
+			if k==1:
+				Button(ventanaTipoPartida, bg=listaColores[n]).grid(row=f, column=13, rowspan=2, columnspan=2, sticky="NSEW")
+				f+=2
+				n+=1
+				k+=1
+			else:
+				Button(ventanaTipoPartida, bg=listaColores[n]).grid(row=f, column=14, rowspan=2, columnspan=2, sticky="NSEW")
+				f+=2
+				n+=1
+				k-=1
+
+		ventanaTipoPartida.mainloop()
+
+	def dificultadFacil():#Coloca la dificultad del juego en facil
+		global dificultadDePartida
+
+		dificultadDePartida="Facil"
+
+	def dificultadoIntermedio():#Coloca la dificulado del juego en Intermedio
+		global dificultadDePartida
+
+		dificultadDePartida="Intermedio"
+
+	def dificultadDificil():#Coloca la dificultad del juego en Dificil
+		global dificultadDePartida
+
+		dificultadDePartida="Dificil"
+	
+	def relojSI():#Coloca la configuracion del reloj en que si se quiere
+		global configReloj
+
+		configReloj=True
+
+	def relojNO():#oloca la configuracion del reloj en que no se quiere
+		global configReloj
+
+		configReloj=False
+
+	def relojTIMER():#Coloca la configuracion del reloj en modo Timer
+		global configReloj
+
+		messagebox.showinfo("RECOMENDACION", "Para nivel Facil: 30 min\nPara nivel Intermedio: 1 hora\nPara nivel Dificil: 2 horas")
+		configReloj="Timer"
 
 	ventanaConfigurar=Toplevel()
 	ventanaConfigurar.title("CONFIGURACION")
-	ventanaConfigurar.iconbitmap("icono_sudoku.ico")
+	ventanaConfigurar.iconbitmap("configuracion.ico")
 	ventanaConfigurar.geometry("700x550")
 	ventanaConfigurar.config(bg="#9ACD32")
 	n=16
@@ -1313,24 +1797,24 @@ def configurarMenu():
 	botonAceptarConfig.grid(row=2, column=10, columnspan=5, sticky="NSEW")
 
 	labelDificultad=Label(ventanaConfigurar, bg="#9ACD32", fg="Black", text="1. Nivel: ", font="Arial, 12").grid(row=1, column=0, rowspan=2, columnspan=4, sticky="NSEW")
-	RBFacil=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Facil", font="Arial, 12")
+	RBFacil=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Facil", font="Arial, 12", command=dificultadFacil)
 	RBFacil.grid(row=1, column=4, columnspan=4, sticky="NSEW")
 	RBFacil.select()
-	RBIntermedio=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Intermedio", font="Arial, 12")
+	RBIntermedio=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Intermedio", font="Arial, 12", command=dificultadoIntermedio)
 	RBIntermedio.grid(row=2, column=4, columnspan=4, sticky="NSEW")
 	RBIntermedio.deselect()
-	RBDificil=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Dificil", font="Arial, 12")
+	RBDificil=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Dificil", font="Arial, 12", command=dificultadDificil)
 	RBDificil.grid(row=3, column=4, columnspan=4, sticky="NSEW")
 	RBDificil.deselect()
 	
 	labelReloj=Label(ventanaConfigurar, bg="#9ACD32", fg="Black", text="2. Reloj: ", font="Arial, 12").grid(row=6, column=0, rowspan=2, columnspan=4, sticky="NSEW")
-	RBSI=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Si", font="Arial, 12")
+	RBSI=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Si", font="Arial, 12", command=relojSI)
 	RBSI.grid(row=6, column=4, columnspan=4, sticky="NSEW")
 	RBSI.select()
-	RBNO=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="No", font="Arial, 12")
+	RBNO=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="No", font="Arial, 12", command=relojNO)
 	RBNO.grid(row=7, column=4, columnspan=4, sticky="NSEW")
 	RBNO.deselect()
-	RBTimer=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Timer", font="Arial, 12")
+	RBTimer=Radiobutton(ventanaConfigurar, bg="#9ACD32", fg="Black", text="Timer", font="Arial, 12", command=relojTIMER)
 	RBTimer.grid(row=8, column=4, columnspan=4, sticky="NSEW")
 	RBTimer.deselect()
 	labelHoras=Label(ventanaConfigurar, bg="#808e9b", fg="Black", text="Horas", font="Arial, 12").grid(row=6, column=9, columnspan=2, sticky="NSEW")
@@ -1400,6 +1884,14 @@ root.iconbitmap("icono_sudoku.ico")
 root.geometry("650x670")
 root.config(bg="#9ACD32")
 
+def top10Guardar():
+	archivo=open("sudoku2019top10.dat", "wb")
+	pickle.dump("1- Carlos Calderon          1:30:15", archivo)
+	pickle.dump("2- Pedro Cabezas            1:40:25", archivo)
+	pickle.dump("3- Rebeca Barquero          1:55:40", archivo)
+	archivo.close()
+
+
 #----------Menu desplegable tipo IDLE---------
 """
 Todo esto son botones tipo menus que aparecen encima del juego
@@ -1428,4 +1920,5 @@ BarraSalir=Menu(vinetas, tearoff=False)
 vinetas.add_command(label="Salir", command=salirMenu)
 
 
+top10Guardar()
 root.mainloop()
