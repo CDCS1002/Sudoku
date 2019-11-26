@@ -8,6 +8,7 @@ Restricciones: Estan basados en la version python 3.7
 from tkinter import *
 from tkinter import messagebox
 from PIL import ImageTk,Image
+import webbrowser as wb
 from random import *
 import pickle
 
@@ -218,9 +219,9 @@ def jugarMenu():
 	"""
 	n=30
 	for k in range(0, n):
-		frameAyuda = Frame(root, width=1, height=650, bg= "Blue")
+		frameAyuda = Frame(root, width=1, height=650, bg= "#9ACD32")
 		frameAyuda.grid(row= 0, column=k, rowspan=n, sticky= "NW")
-		frameAyuda = Frame(root, width=650, height=1, bg= "Blue")
+		frameAyuda = Frame(root, width=650, height=1, bg= "#9ACD32")
 		frameAyuda.grid(row= k, column=0, columnspan=n, sticky= "NW")
 
 
@@ -1321,9 +1322,9 @@ def jugarMenu():
 				archivo=open("sudoku2019top10.dat", "rb")
 				n=14
 				for k in range(0,n):
-					frameAyuda = Frame(ventanaFacil, width=1, height=500, bg= "Blue")
+					frameAyuda = Frame(ventanaFacil, width=1, height=500, bg= "#9ACD32")
 					frameAyuda.grid(row= 0, column=k, rowspan=n, sticky= "NW")
-					frameAyuda = Frame(ventanaFacil, width=400, height=1, bg= "Blue")
+					frameAyuda = Frame(ventanaFacil, width=400, height=1, bg= "#9ACD32")
 					frameAyuda.grid(row= k, column=0, columnspan=n, sticky= "NW")
 				labelNOMBRETOP=Label(ventanaFacil, bg="#9ACD32", text="JUGADOR", font="Arial, 14").grid(row=0, column=0, columnspan=7, rowspan=2, sticky="NSEW")
 				labelTIEMPOTOP=Label(ventanaFacil, bg="#9ACD32", text="TIEMPO", font="Arial, 14").grid(row=0, column=7, columnspan=7, rowspan=2, sticky="NSEW")
@@ -1357,9 +1358,9 @@ def jugarMenu():
 				archivo=open("sudoku2019top10.dat", "rb")
 				n=14
 				for k in range(0,n):
-					frameAyuda = Frame(ventanaIntermedio, width=1, height=500, bg= "Blue")
+					frameAyuda = Frame(ventanaIntermedio, width=1, height=500, bg= "#9ACD32")
 					frameAyuda.grid(row= 0, column=k, rowspan=n, sticky= "NW")
-					frameAyuda = Frame(ventanaIntermedio, width=400, height=1, bg= "Blue")
+					frameAyuda = Frame(ventanaIntermedio, width=400, height=1, bg= "#9ACD32")
 					frameAyuda.grid(row= k, column=0, columnspan=n, sticky= "NW")
 				labelNOMBRETOP=Label(ventanaIntermedio, bg="#9ACD32", text="JUGADOR", font="Arial, 14").grid(row=0, column=0, columnspan=7, rowspan=2, sticky="NSEW")
 				labelTIEMPOTOP=Label(ventanaIntermedio, bg="#9ACD32", text="TIEMPO", font="Arial, 14").grid(row=0, column=7, columnspan=7, rowspan=2, sticky="NSEW")
@@ -1393,9 +1394,9 @@ def jugarMenu():
 				archivo=open("sudoku2019top10.dat", "rb")
 				n=14
 				for k in range(0,n):
-					frameAyuda = Frame(ventanaDificil, width=1, height=500, bg= "Blue")
+					frameAyuda = Frame(ventanaDificil, width=1, height=500, bg= "#9ACD32")
 					frameAyuda.grid(row= 0, column=k, rowspan=n, sticky= "NW")
-					frameAyuda = Frame(ventanaDificil, width=400, height=1, bg= "Blue")
+					frameAyuda = Frame(ventanaDificil, width=400, height=1, bg= "#9ACD32")
 					frameAyuda.grid(row= k, column=0, columnspan=n, sticky= "NW")
 				labelNOMBRETOP=Label(ventanaDificil, bg="#9ACD32", text="JUGADOR", font="Arial, 14").grid(row=0, column=0, columnspan=7, rowspan=2, sticky="NSEW")
 				labelTIEMPOTOP=Label(ventanaDificil, bg="#9ACD32", text="TIEMPO", font="Arial, 14").grid(row=0, column=7, columnspan=7, rowspan=2, sticky="NSEW")
@@ -1841,7 +1842,7 @@ def ayudaMenu():
 	Salidas: El manual de usuario
 	Restricciones: No tiene
 	"""
-	#wb.open_new(r"")
+	wb.open_new(r"C:\Users\carlo\OneDrive\Escritorio\TEC\Segundo Semestre\Intro y Taller\Taller\Proyectos\3er proyecto\Sudoku\manual_de_usuario_sudoku.pdf")
 
 
 #---Funcion de Salir---
